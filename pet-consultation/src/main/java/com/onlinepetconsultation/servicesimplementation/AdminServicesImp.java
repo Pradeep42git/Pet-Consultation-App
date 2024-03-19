@@ -49,7 +49,7 @@ public class AdminServicesImp implements AdminService {
 		} else {
 			throw null;
 		}
-	}
+	} 
 
 	public ResponseEntity<ResponseStructure<Admin>> getByName(int adminName) {
 		Admin admin = adminDao.getAdminById(adminName);
@@ -62,7 +62,7 @@ public class AdminServicesImp implements AdminService {
 		} else {
 			throw null;
 		}
-	}
+	}  
 
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(int adminId) {
 		boolean admin = adminDao.deleteAdmin(adminId);
