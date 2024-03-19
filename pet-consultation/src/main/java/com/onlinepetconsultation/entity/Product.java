@@ -30,6 +30,7 @@ public class Product {
 	@NotNull
 	private String name;
 	private String description;
+	private boolean isAvailable;
 	@Positive
 	@NotNull
 	private double totalCost;
