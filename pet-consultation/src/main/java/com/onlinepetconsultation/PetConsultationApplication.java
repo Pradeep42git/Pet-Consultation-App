@@ -14,7 +14,6 @@ public class PetConsultationApplication implements CommandLineRunner{
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(PetConsultationApplication.class, args);
 	}
