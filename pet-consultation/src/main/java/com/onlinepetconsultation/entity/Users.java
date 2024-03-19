@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +60,7 @@ public class Users {
 	private String userAddress;
 	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@JsonIgnore
 	List<Booking> booking;
 	
 	@OneToMany(cascade = CascadeType.ALL)
