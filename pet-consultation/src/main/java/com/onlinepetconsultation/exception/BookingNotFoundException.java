@@ -3,16 +3,16 @@ package com.onlinepetconsultation.exception;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserNotFoundException extends RuntimeException {
+public class BookingNotFoundException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String message = "";	
+	private String message = "";
+	
 	@Override
 	public String getMessage() {
 		return message;
-	}
+	}	
 }

@@ -13,11 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
+import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.entity.Booking;
+import com.onlinepetconsultation.services.BookingService;
+
 @RestController
 @RequestMapping("/onlinepetconsultation/bs")
 public class BookingServiceController {
 	@Autowired
 	FoodOrderServicesImp foodOrderServices;
+	@Autowired
+	private BookingService bookingService;
 	
 	@PostMapping("{user_id}/food")
 	public ResponseEntity<?> saveFoodOrder(@RequestBody FoodOrder food,@PathVariable int user_id){
@@ -40,6 +46,20 @@ public class BookingServiceController {
 		return foodOrderServices.deleteFoodOrder(order_id);
 	}
 	
+		
+	@PostMapping("/{userId}/{consultantId}")
+	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(int userId, int consultantId){
+		return bookingService.bookingOrderConsultant(userId, consultantId);
+	}
 	
+	@GetMapping("get/{bookingId}")
+	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(int bookingId){
+		return bookingService.searchBookingOrder(bookingId);
+	}
+	
+	@DeleteMapping("get/{bookingId}")
+	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(int bookingId){
+		return bookingService.deleteBookingOrder(bookingId);
+	}
 
 }
