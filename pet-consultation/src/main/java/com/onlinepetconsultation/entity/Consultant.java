@@ -34,12 +34,12 @@ public class Consultant {
 	private int Id;
 	@Size(min = 5, message = "Name should consist of at least 5 characters")
 	@Column(unique = true)
-	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$" ,message = "Invalid name format" )
+	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$", message = "Invalid name format")
 	@NotNull
 	private String name;
 	@Email
 	@Column(unique = true)
-	@Pattern(regexp = "^[A-Za-z0-9@.]*$" ,message = "Invalid email format" )
+	@Pattern(regexp = "^[A-Za-z0-9@.]*$", message = "Invalid email format")
 	@NotNull
 	private String email;
 	@NotNull
@@ -47,6 +47,6 @@ public class Consultant {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private ConsultantRoles designation;
-	@OneToMany(mappedBy = "consultant",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(mappedBy = "consultant", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Booking> booking;
 }
