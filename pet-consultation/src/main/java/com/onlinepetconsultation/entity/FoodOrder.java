@@ -3,8 +3,6 @@ package com.onlinepetconsultation.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +26,13 @@ public class FoodOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "foodorder_id")
 	@SequenceGenerator(name = "foodorder_id", initialValue = 100, allocationSize = 1, sequenceName = "foodorder_sequence")
 	private int Id;
-	@CreationTimestamp
+	
+	
 	private LocalDateTime foodorderDateTime;
+	
 	private boolean orderStatus;
+	
+	
 	@NotNull
 	@Positive
 	private double cost;

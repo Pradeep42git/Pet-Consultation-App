@@ -10,4 +10,5 @@ public class UserDao {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 }

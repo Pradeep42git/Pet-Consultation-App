@@ -1,5 +1,6 @@
 package com.onlinepetconsultation.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,20 @@ public class ProductDao {
 			return product;
 		}
 		return null;
+	}
+	
+	/*
+	 * This method is used to get All the Product list if isAvailable is true for users
+	 */
+	public List<Product> getAllProducts(boolean status){
+		return productRepository.findByIsAvailable(status);
+	}
+	
+	/*
+	 * This method is used to get All the Product list for admin
+	 */
+	public List<Product> getAllProducts(){
+		return productRepository.findAll();
 	}
 	
 	/*
