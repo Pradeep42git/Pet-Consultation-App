@@ -3,6 +3,8 @@ package com.onlinepetconsultation.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,6 +40,7 @@ public class FoodOrder {
 	private double cost;
 
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@JsonIgnore
 	private List<Product> products;
 
 }

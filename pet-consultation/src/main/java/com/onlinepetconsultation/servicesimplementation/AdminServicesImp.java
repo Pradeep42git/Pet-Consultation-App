@@ -9,6 +9,7 @@ import com.onlinepetconsultation.dao.AdminDao;
 import com.onlinepetconsultation.dto.AdminDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.Admin;
+import com.onlinepetconsultation.exception.AdminNotExistException;
 import com.onlinepetconsultation.services.AdminService;
 
 @Service
@@ -47,12 +48,12 @@ public class AdminServicesImp implements AdminService {
 			responseStructure.setData(admin);
 			return new ResponseEntity<ResponseStructure<Admin>>(responseStructure, HttpStatus.OK);
 		} else {
-			throw null;
+			throw new AdminNotExistException();
 		}
 	} 
-
-	public ResponseEntity<ResponseStructure<Admin>> getByName(int adminName) {
-		Admin admin = adminDao.getAdminById(adminName);
+	
+	public ResponseEntity<ResponseStructure<Admin>> getByName(String adminName) {
+		Admin admin = adminDao.getAdminByName(adminName);
 		if (admin != null) {
 			ResponseStructure<Admin> responseStructure = new ResponseStructure<>();
 			responseStructure.setStatusCode(HttpStatus.OK.value());
@@ -60,10 +61,11 @@ public class AdminServicesImp implements AdminService {
 			responseStructure.setData(admin);
 			return new ResponseEntity<ResponseStructure<Admin>>(responseStructure, HttpStatus.OK);
 		} else {
-			throw null;
+			throw new AdminNotExistException();
 		}
 	}  
 
+	@Override
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(int adminId) {
 		boolean admin = adminDao.deleteAdmin(adminId);
 		if (admin) {
