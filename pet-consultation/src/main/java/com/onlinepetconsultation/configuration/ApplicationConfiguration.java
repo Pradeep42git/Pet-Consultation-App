@@ -28,9 +28,7 @@ public class ApplicationConfiguration {
 
 		License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
-		Info info = new Info().title("petconsultationapp RESTful Web Service documentation").version("1.0").contact(contact)
-				.description("This API exposes endpoints to manage petconsultationapp.")
-				.termsOfService("https://foodapp/terms").license(mitLicense);
+		Info info = new Info().title("petconsultationapp RESTful Web Service documentation").version("1.0").contact(contact).description("This API exposes endpoints to manage petconsultationapp.").termsOfService("https://foodapp/terms").license(mitLicense);
 
 		return new OpenAPI().info(info).servers(List.of(localhost));
 	}
