@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlinepetconsultation.dto.ConsultantDto;
 import com.onlinepetconsultation.dto.ProductDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.entity.Booking;
+import com.onlinepetconsultation.entity.Consultant;
 import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.services.AdminService;
 import com.onlinepetconsultation.services.ConsultantService;
@@ -52,4 +55,30 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<String>> deleteProduct(@PathVariable int adminId,@PathVariable int productId){
 		return productService.deleteProduct(adminId, productId);
 	}
+	
+	@PostMapping("/save-consultant/{adminId}")
+	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(@RequestBody ConsultantDto consultantDto,@PathVariable int adminId){
+		return consultantService.saveConsultant(consultantDto, adminId);
+	}
+	
+	@GetMapping("/get-all-consultant")
+	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultant(){
+		return consultantService.getAllConsultants();
+	}
+	
+	@PutMapping("/update-consultant/{adminId}/{consultantId}")
+	public ResponseEntity<ResponseStructure<Consultant>> updateConsultant(@RequestBody ConsultantDto consultantDto,@PathVariable int adminId,@PathVariable int consultantId){
+		return consultantService.updateConsultant(consultantDto, adminId, consultantId);
+	}
+	
+	@GetMapping("/get-all-bookings/{consultantId}/{adminId}")
+	public ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(@PathVariable int consultantId,@PathVariable int adminId){
+		return consultantService.getAllBookings(consultantId, adminId);
+	}
+	
+	@DeleteMapping("/remove-consultant/{adminId}/{consultantId}")
+	public ResponseEntity<ResponseStructure<String>> removeConsultant(@PathVariable int adminId,@PathVariable int consultantId){
+		return consultantService.removeConsultant(consultantId, adminId);
+	}
+	
 }
