@@ -11,17 +11,27 @@ import com.onlinepetconsultation.dto.ResponseStructure;
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler
-	public ResponseEntity<ResponseStructure<String>> userNotFoundExceptionhandler(UserNotFoundException exception){
+	@ExceptionHandler(AdminNotExistException.class)
+	public ResponseEntity<ResponseStructure<String>> catchAdminNotFoundException(
+			AdminNotExistException notFoundException) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		
+		responseStructure.setMessage("Admin Not found ");
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setData(notFoundException.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> userNotFoundExceptionhandler(UserNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
 		responseStructure.setMessage(exception.getMessage());
-		
+
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler
 	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(ConsultantNotFoundException exception){
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
@@ -29,8 +39,16 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
 		responseStructure.setMessage(exception.getMessage());
-		
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
-	
+
+	@ExceptionHandler(ProductNotExistException.class)
+	public ResponseEntity<ResponseStructure<String>> catchProductNotFoundException(
+			ProductNotExistException notFoundException) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setMessage("Product Not found ");
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setData(notFoundException.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
 }
