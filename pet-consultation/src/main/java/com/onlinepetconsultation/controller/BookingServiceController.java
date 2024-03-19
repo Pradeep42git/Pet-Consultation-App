@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,17 +21,17 @@ public class BookingServiceController {
 	private BookingService bookingService;
 	
 	@PostMapping("/{userId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(int userId, int consultantId){
+	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
 	
 	@GetMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(int bookingId){
+	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(@PathVariable int bookingId){
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
 	@DeleteMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(int bookingId){
+	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}
 
