@@ -48,17 +48,17 @@ public class BookingServiceController {
 	
 		
 	@PostMapping("/{userId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(int userId, int consultantId){
+	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
 	
 	@GetMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(int bookingId){
+	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(@PathVariable int bookingId){
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
 	@DeleteMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(int bookingId){
+	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}
 
