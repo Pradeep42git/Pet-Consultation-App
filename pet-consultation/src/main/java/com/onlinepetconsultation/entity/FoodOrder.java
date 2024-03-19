@@ -28,9 +28,13 @@ public class FoodOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "foodorder_id")
 	@SequenceGenerator(name = "foodorder_id", initialValue = 100, allocationSize = 1, sequenceName = "foodorder_sequence")
 	private int Id;
-	@CreationTimestamp
+	
+	
 	private LocalDateTime foodorderDateTime;
+	
 	private boolean orderStatus;
+	
+	
 	@NotNull
 	@Positive
 	private double cost;

@@ -26,12 +26,15 @@ public class Booking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "booking_id")
 	@SequenceGenerator(name = "booking_id", initialValue = 100, allocationSize = 1, sequenceName = "booking_sequence")
 	private int Id;
+	
 	@CreationTimestamp
 	private LocalDateTime bookingDateTime;
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn
 	private Users user;
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn
