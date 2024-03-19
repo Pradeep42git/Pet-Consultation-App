@@ -35,9 +35,7 @@ public class Product {
 	private String description;
 
 	private boolean isAvailable;
-	@NotNull
-	@PositiveOrZero
-	private int quantity;
+	
 	
 	@Positive
 	@NotNull

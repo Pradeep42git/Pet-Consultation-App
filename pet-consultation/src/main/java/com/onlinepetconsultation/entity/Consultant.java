@@ -48,6 +48,8 @@ public class Consultant {
 	@NotNull
 	private String address;
 	
+	private boolean isAvailable;
+	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private ConsultantRoles designation;

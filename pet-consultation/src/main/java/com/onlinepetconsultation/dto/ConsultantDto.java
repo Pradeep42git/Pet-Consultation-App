@@ -27,7 +27,7 @@ public class ConsultantDto {
 	
 	@NotNull
 	private String address;
-	
+	private boolean isAvailable;
 	@NotNull
 	private String designation;
 	
