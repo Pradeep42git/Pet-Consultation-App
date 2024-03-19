@@ -18,7 +18,7 @@ import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.services.BookingService;
 
 @RestController
-@RequestMapping("/onlinepetconsultation/bs")
+@RequestMapping("/opc/bs")
 public class BookingServiceController {
 	@Autowired
 	FoodOrderServicesImp foodOrderServices;
