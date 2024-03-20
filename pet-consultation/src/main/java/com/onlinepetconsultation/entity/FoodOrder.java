@@ -30,7 +30,7 @@ public class FoodOrder {
 	private LocalDateTime foodorderDateTime;
 	
 	private boolean orderStatus;
-		
+
 	@Positive
 	private double cost;
 
