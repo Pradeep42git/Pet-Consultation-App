@@ -15,9 +15,6 @@ import com.onlinepetconsultation.services.AdminService;
 @Service
 public class AdminServicesImp implements AdminService {
 
-	@Autowired
-	private AdminDto adminDto;
-	
 
 	@Autowired
 	private AdminDao adminDao;
