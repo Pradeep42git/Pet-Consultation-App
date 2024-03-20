@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -27,18 +26,17 @@ public class FoodOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "foodorder_id")
 	@SequenceGenerator(name = "foodorder_id", initialValue = 100, allocationSize = 1, sequenceName = "foodorder_sequence")
 	private int Id;
-	
-	
+
 	private LocalDateTime foodorderDateTime;
-	
+
 	private boolean orderStatus;
-	
-	
+
 	@NotNull
 	@Positive
 	private double cost;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Product> products;
+	
 
 }
