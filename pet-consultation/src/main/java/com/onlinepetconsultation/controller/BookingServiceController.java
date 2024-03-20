@@ -14,7 +14,6 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 import com.onlinepetconsultation.dto.BookingResponse;
 import com.onlinepetconsultation.dto.ResponseStructure;
-import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.services.BookingService;
 
 @RestController
