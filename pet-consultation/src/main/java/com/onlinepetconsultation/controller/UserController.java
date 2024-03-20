@@ -33,7 +33,12 @@ public class UserController {
 	@GetMapping("/get-consultant-designation")
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantByDesignation(
 			@RequestParam String designation) {
-		return consultantService.getAllConsultants();
+		return consultantService.getConsultantsByDesignation(designation);
+	}
+
+	@GetMapping("/get-all-consultant")
+	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultant() {
+		return consultantService.getAllConsultantsForUsers();
 	}
 
 }
