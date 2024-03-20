@@ -1,15 +1,15 @@
 package com.onlinepetconsultation.exception;
 
-public class UsersNotFoundException extends RuntimeException{
+public class UserNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	private String message="Admin not present";
 
-	public UsersNotFoundException() {
+	public UserNotFoundException() {
 		
 	}
 
-	public UsersNotFoundException(String message) {
+	public UserNotFoundException(String message) {
 		this.message = message;
 	}
 	

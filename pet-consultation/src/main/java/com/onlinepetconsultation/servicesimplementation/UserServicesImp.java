@@ -11,7 +11,7 @@ import com.onlinepetconsultation.dao.UserDao;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.dto.UsersDto;
 import com.onlinepetconsultation.entity.Users;
-import com.onlinepetconsultation.exception.UsersNotFoundException;
+import com.onlinepetconsultation.exception.UserNotFoundException;
 import com.onlinepetconsultation.services.UserService;
 
 @Service
@@ -56,7 +56,7 @@ public class UserServicesImp implements UserService {
 			responseStructure.setData(user);
 			return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.OK);
 		} else {
-			throw new UsersNotFoundException();
+			throw new UserNotFoundException();
 		}
 	}
 
@@ -74,7 +74,7 @@ public class UserServicesImp implements UserService {
 			responseStructure.setData(user);
 			return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.OK);
 		} else {
-			throw new UsersNotFoundException();
+			throw new UserNotFoundException();
 		}
 	}
 
@@ -120,7 +120,7 @@ public class UserServicesImp implements UserService {
 			}
 			receivedUser = usersDao.createUser(user);
 		} else {
-			throw new UsersNotFoundException();
+			throw new UserNotFoundException();
 		}
 
 		ResponseStructure<Users> responseStructure = new ResponseStructure<Users>();
