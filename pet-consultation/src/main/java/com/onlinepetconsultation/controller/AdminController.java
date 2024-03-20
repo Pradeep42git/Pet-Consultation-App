@@ -112,4 +112,10 @@ public class AdminController {
 		return adminService.deleteAdmin(adminId);
 
 
-}}
+}
+	@PutMapping("/update-admin/{adminId}")
+	public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@RequestBody AdminDto adminDto,@PathVariable int adminId) {
+		return adminService.updateAdmin(adminDto,adminId);
+
+	}
+	}
