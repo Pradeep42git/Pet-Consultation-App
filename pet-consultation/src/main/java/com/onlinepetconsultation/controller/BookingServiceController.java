@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.onlinepetconsultation.entity.FoodOrder;
-import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
+
+import com.onlinepetconsultation.dto.BookingResponse;
 import com.onlinepetconsultation.dto.FoodOrderDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
-import com.onlinepetconsultation.entity.Booking;
+import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
+import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
 @RestController
 @RequestMapping("/opc/bs")
@@ -48,16 +49,16 @@ public class BookingServiceController {
 	
 		
 	@PostMapping("/{userId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
 	
 	@GetMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(@PathVariable int bookingId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(@PathVariable int bookingId){
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
-	@DeleteMapping("get/{bookingId}")
+	@DeleteMapping("delete/{bookingId}")
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}
