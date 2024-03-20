@@ -21,19 +21,19 @@ public class UserController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private ConsultantService consultantService;
-	
+
 	@GetMapping("/user-product-list")
-	public ResponseEntity<ResponseStructure<List<Product>>> getForUser(){
+	public ResponseEntity<ResponseStructure<List<Product>>> getForUser() {
 		return productService.getAllProductByIsAvailable();
 	}
-	
-	
+
 	@GetMapping("/get-consultant-designation")
-	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantByDesignation(@RequestParam String designation){
+	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantByDesignation(
+			@RequestParam String designation) {
 		return consultantService.getAllConsultants();
 	}
-	
+
 }

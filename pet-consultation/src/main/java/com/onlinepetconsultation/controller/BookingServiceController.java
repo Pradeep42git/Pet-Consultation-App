@@ -17,9 +17,6 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
-
-
-
 @RestController
 @RequestMapping("/opc/bs")
 public class BookingServiceController {
@@ -27,39 +24,40 @@ public class BookingServiceController {
 	private FoodOrderServicesImp foodOrderServices;
 	@Autowired
 	private BookingService bookingService;
-	
+
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id) throws Exception{
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto, @PathVariable int user_id) throws Exception {
 		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
+
 	@GetMapping("/search/{order_id}")
-	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id){
+	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id) {
 		return foodOrderServices.searchFoodOrder(order_id);
 	}
-	
+
 	@PutMapping("/update/{order_id}")
-	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @RequestBody FoodOrder order){
+	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @RequestBody FoodOrder order) {
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
-	
+
 	@DeleteMapping("{user_id}/delete_food/{order_id}")
-	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id){
+	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id) {
 		return foodOrderServices.deleteFoodOrder(order_id, user_id);
 	}
-	
-		
+
 	@PostMapping("/{userId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId,
+			@PathVariable int consultantId) {
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
-	
+
 	@GetMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(@PathVariable int bookingId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(@PathVariable int bookingId) {
 		return bookingService.searchBookingOrder(bookingId);
 	}
-	
+
 	@DeleteMapping("delete_booking/{bookingId}")
-	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
+	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId) {
 		return bookingService.deleteBookingOrder(bookingId);
 	}
 

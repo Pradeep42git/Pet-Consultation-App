@@ -107,9 +107,10 @@ public class AdminController {
 		return adminService.getByName(adminName);
 
 	}
+
 	@DeleteMapping("/remove-admin/{adminId}")
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(@PathVariable int adminId) {
 		return adminService.deleteAdmin(adminId);
 
-
-}}
+	}
+}

@@ -3,7 +3,6 @@ package com.onlinepetconsultation.exception;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserNotFoundException extends RuntimeException {
