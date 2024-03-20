@@ -29,6 +29,9 @@ public class ConsultantServicesImp implements ConsultantService {
 	@Autowired
 	private AdminRepository adminRepository;
 
+	/*
+	 * Performs save operation and returns Consultant created Response
+	 */
 	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(ConsultantDto consultantDto, int adminId) {
 		Optional<Admin> optional = adminRepository.findById(adminId);
 		Consultant receivedConsultant = null;
@@ -70,10 +73,13 @@ public class ConsultantServicesImp implements ConsultantService {
 
 		return new ResponseEntity<ResponseStructure<Consultant>>(response, HttpStatus.CREATED);
 	}
+	
+	/*
+	 * perform the retrive list of consultant operation for the Admin
+	 */
+	public ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultantsForAdmin() {
 
-	public ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultants() {
-
-		List<Consultant> consultant = consultantDao.getAllConsultant();
+		List<Consultant> consultant = consultantDao.getAllConsultantForAdmin();
 		ResponseStructure<List<Consultant>> response = new ResponseStructure<List<Consultant>>();
 		response.setStatusCode(HttpStatus.CREATED.value());
 		response.setMessage("Success");
@@ -81,6 +87,22 @@ public class ConsultantServicesImp implements ConsultantService {
 		return new ResponseEntity<ResponseStructure<List<Consultant>>>(response, HttpStatus.CREATED);
 	}
 
+	/*
+	 * perform the retrive list of consultant operation for the users
+	 */
+	public ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultantsForUsers() {
+
+		List<Consultant> consultant = consultantDao.getAllConsultantForUsers();
+		ResponseStructure<List<Consultant>> response = new ResponseStructure<List<Consultant>>();
+		response.setStatusCode(HttpStatus.CREATED.value());
+		response.setMessage("Success");
+		response.setData(consultant);
+		return new ResponseEntity<ResponseStructure<List<Consultant>>>(response, HttpStatus.CREATED);
+	}
+
+	/*
+	 * perform the retrive list of consultant opertion by giving the designation
+	 */
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantsByDesignation(
 			String designation) {
 		List<Consultant> con_list = null;
@@ -113,6 +135,9 @@ public class ConsultantServicesImp implements ConsultantService {
 		return new ResponseEntity<ResponseStructure<List<Consultant>>>(responseStructure, HttpStatus.OK);
 	}
 
+	/*
+	 * perform the update operation for the consultant by using consultantId
+	 */
 	public ResponseEntity<ResponseStructure<Consultant>> updateConsultant(ConsultantDto consultantDto, int adminId,
 			int consultantId) {
 
@@ -145,7 +170,10 @@ public class ConsultantServicesImp implements ConsultantService {
 
 		return new ResponseEntity<ResponseStructure<Consultant>>(response, HttpStatus.OK);
 	}
-	
+
+	/*
+	 * perform the get bookings of any consultant by consultant Id
+	 */
 	public ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(int consultantId, int adminId) {
 		List<Booking> bookings=null;
 		if (adminRepository.existsById(adminId)) {
@@ -169,6 +197,9 @@ public class ConsultantServicesImp implements ConsultantService {
 
 	}
 
+	/*
+	 * Performs delete operations by setting field in false
+	 */
 	public ResponseEntity<ResponseStructure<String>> removeConsultant(int consultantId, int adminId) {
 		if (adminRepository.existsById(adminId)) {
 			if (consultantId != 0) {

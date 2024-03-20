@@ -39,17 +39,24 @@ public class ConsultantDao {
 	}
 	
 	/*
-	 * This method is used to get All the Consultants list
+	 * This method is used to get All the Consultants list for Admin
 	 */
-	public List<Consultant> getAllConsultant() {
+	public List<Consultant> getAllConsultantForAdmin() {
 		return consultantRepository.findAll();
+	}
+	
+	/*
+	 * This method is used to get All the Consultants list for User
+	 */
+	public List<Consultant> getAllConsultantForUsers() {
+		return consultantRepository.findByIsAvailable(true);
 	}
 	
 	/*
 	 * This method is used to get All the Consultants list based on the designation
 	 */
 	public List<Consultant> getConsultantsByDesignation(ConsultantRoles designation){
-		return consultantRepository.findByDesignation(designation);
+		return consultantRepository.findByDesignationAndIsAvailable(designation,true);
 	}
 	
 
