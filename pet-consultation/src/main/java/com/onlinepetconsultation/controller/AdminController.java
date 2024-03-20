@@ -99,18 +99,18 @@ public class AdminController {
 
 	}
 
-	@GetMapping("/get-admin/{adminId}")
+	@GetMapping("/get-admin-id/{adminId}")
 	public ResponseEntity<ResponseStructure<Admin>> getAdminById(@PathVariable int adminId) {
 		return adminService.getById(adminId);
 
 	}
 
-	@GetMapping("/get-admin/{adminName}")
+	@GetMapping("/get-admin-name/{adminName}")
 	public ResponseEntity<ResponseStructure<Admin>> getAdminByName(@PathVariable String adminName) {
 		return adminService.getByName(adminName);
 
 	}
-	@DeleteMapping("/get-admin/{adminId}")
+	@DeleteMapping("/remove-admin/{adminId}")
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(@PathVariable int adminId) {
 		return adminService.deleteAdmin(adminId);
 
