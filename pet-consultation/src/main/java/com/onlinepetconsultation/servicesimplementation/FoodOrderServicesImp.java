@@ -1,5 +1,6 @@
 package com.onlinepetconsultation.servicesimplementation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.onlinepetconsultation.dao.FoodOrderDao;
+import com.onlinepetconsultation.dao.ProductDao;
+import com.onlinepetconsultation.dto.FoodOrderDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.FoodOrder;
+import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.FoodOrderNotFoundException;
 import com.onlinepetconsultation.exception.UserNotFoundException;
@@ -31,24 +35,28 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	Users users;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	ProductDao dao;
 	
-	public ResponseEntity<?> saveFoodOrder(FoodOrder food,int id){
+	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food,int id){
 		Users user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User Found"));
-		FoodOrder  foodOrder= foodOrderDao.saveFoodOrder(food);
-		List<FoodOrder> foodList1=(user.getFoodOrders().isEmpty()) ? new ArrayList<FoodOrder>():user.getFoodOrders() ;
-		user.setFoodOrders(foodList1);
-		if(foodOrder!=null) {
-			responseStructure.setData(foodOrder);
-			responseStructure.setMessage(HttpStatus.CREATED.getReasonPhrase());
-			responseStructure.setStatusCode(HttpStatus.CREATED.value());
-			return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure,HttpStatus.CREATED);
+		FoodOrder foodOrder=new FoodOrder();
+		foodOrder.setCost(food.getCost());
+		foodOrder.setOrderStatus(food.isOrderStatus());
+		foodOrder.setFoodorderDateTime(LocalDateTime.now());
+		List<Product> products=new ArrayList<Product>();
+		for (Integer product : food.getProducts()) {
+			Product product2=dao.getProductById(product);
+			if(product2!=null) {
+				products.add(product2);
+			}
 		}
-		else {
-			responseStructure1.setData("Food Order Not Created Sucessfully");
-			responseStructure1.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
-			responseStructure1.setStatusCode(HttpStatus.BAD_REQUEST.value());
-			return new ResponseEntity<ResponseStructure<String>>(responseStructure1,HttpStatus.BAD_REQUEST);
-		}
+		foodOrder.setProducts(products);
+		foodOrderDao.saveFoodOrder(foodOrder);
+		responseStructure.setData(foodOrder);
+		responseStructure.setMessage(HttpStatus.FOUND.getReasonPhrase());
+		responseStructure.setStatusCode(HttpStatus.FOUND.value());
+		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.FOUND);
 	}
 	
 	public ResponseEntity<?> searchFoodOrder(int id){
