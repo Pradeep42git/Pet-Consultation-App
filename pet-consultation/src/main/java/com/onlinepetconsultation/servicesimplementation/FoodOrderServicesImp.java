@@ -17,9 +17,13 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.FoodOrderNotFoundException;
+import com.onlinepetconsultation.exception.ProductNotExistException;
 import com.onlinepetconsultation.exception.UserNotFoundException;
+import com.onlinepetconsultation.repository.ProductRepository;
 import com.onlinepetconsultation.repository.UserRepository;
 import com.onlinepetconsultation.services.FoodOrderService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class FoodOrderServicesImp implements FoodOrderService {
@@ -34,27 +38,33 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
+	ProductRepository productRepository;
+	@Autowired
 	ProductDao dao;
 	
 	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food,int id){
 		Users user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User Found"));
 		FoodOrder foodOrder=new FoodOrder();
-		foodOrder.setCost(food.getCost());
 		foodOrder.setOrderStatus(food.isOrderStatus());
 		foodOrder.setFoodorderDateTime(LocalDateTime.now());
+		double foodBill=0; 
 		List<Product> products=new ArrayList<Product>();
 		for (Integer product : food.getProducts()) {
 			Product product2=dao.getProductById(product);
 			if(product2!=null) {
+				foodBill=product2.getTotalCost()+foodBill;
 				products.add(product2);
+			}else {
+				throw new ProductNotExistException("Product not found");
 			}
 		}
+		foodOrder.setCost(foodBill);
 		foodOrder.setProducts(products);
 		foodOrderDao.saveFoodOrder(foodOrder);
 		responseStructure.setData(foodOrder);
-		responseStructure.setMessage(HttpStatus.FOUND.getReasonPhrase());
-		responseStructure.setStatusCode(HttpStatus.FOUND.value());
-		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.FOUND);
+		responseStructure.setMessage(HttpStatus.CREATED.getReasonPhrase());
+		responseStructure.setStatusCode(HttpStatus.CREATED.value());
+		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.CREATED);
 	}
 	
 	public ResponseEntity<?> searchFoodOrder(int id){
@@ -81,5 +91,29 @@ public class FoodOrderServicesImp implements FoodOrderService {
 		
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure1,HttpStatus.OK);
 	}
+	
+		
+	
+	
+	
+	
+	
+	
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
