@@ -17,7 +17,7 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.FoodOrderNotFoundException;
-import com.onlinepetconsultation.exception.UserNotFoundException;
+import com.onlinepetconsultation.exception.UsersNotFoundException;
 import com.onlinepetconsultation.repository.UserRepository;
 import com.onlinepetconsultation.services.FoodOrderService;
 
@@ -37,7 +37,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	ProductDao dao;
 	
 	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food,int id){
-		Users user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User Found"));
+		Users user = userRepository.findById(id).orElseThrow(()-> new UsersNotFoundException("No User Found"));
 		FoodOrder foodOrder=new FoodOrder();
 		foodOrder.setCost(food.getCost());
 		foodOrder.setOrderStatus(food.isOrderStatus());

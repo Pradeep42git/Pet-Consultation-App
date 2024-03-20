@@ -22,20 +22,10 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 	}
 
 	@ExceptionHandler
-	public ResponseEntity<ResponseStructure<String>> userNotFoundExceptionhandler(UserNotFoundException exception) {
+	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(
+			ConsultantNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 
-		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
-		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
-		responseStructure.setMessage(exception.getMessage());
-
-		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
-	}
-
-	@ExceptionHandler
-	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(ConsultantNotFoundException exception){
-		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
 		responseStructure.setMessage(exception.getMessage());
@@ -47,6 +37,16 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 			ProductNotExistException notFoundException) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setMessage("Product Not found ");
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setData(notFoundException.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(UsersNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> catchUsersNotFoundException(
+			UsersNotFoundException notFoundException) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setMessage("user Not found ");
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setData(notFoundException.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
