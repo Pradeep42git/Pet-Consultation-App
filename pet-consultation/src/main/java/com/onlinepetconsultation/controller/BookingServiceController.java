@@ -42,9 +42,9 @@ public class BookingServiceController {
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
 	
-	@DeleteMapping("/delete/{order_id}")
-	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id){
-		return foodOrderServices.deleteFoodOrder(order_id);
+	@DeleteMapping("{user_id}/delete_food/{order_id}")
+	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id){
+		return foodOrderServices.deleteFoodOrder(order_id, user_id);
 	}
 	
 		
@@ -58,7 +58,7 @@ public class BookingServiceController {
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
-	@DeleteMapping("delete/{bookingId}")
+	@DeleteMapping("delete_booking/{bookingId}")
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}
