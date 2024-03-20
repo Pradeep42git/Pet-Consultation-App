@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.repository.UserRepository;
 
@@ -32,7 +31,7 @@ public class UserDao {
 	}
 
 	public Users getUserByName(String userName) {
-		Users user = userRepository.findByName(userName);
+		Users user = userRepository.findByUserName(userName);
 		if (user != null) {
 			return user;
 		}

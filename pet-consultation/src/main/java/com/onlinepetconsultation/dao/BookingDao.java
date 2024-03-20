@@ -8,7 +8,7 @@ import com.onlinepetconsultation.entity.Consultant;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.BookingNotFoundException;
 import com.onlinepetconsultation.exception.ConsultantNotFoundException;
-import com.onlinepetconsultation.exception.UsersNotFoundException;
+import com.onlinepetconsultation.exception.UserNotFoundException;
 import com.onlinepetconsultation.repository.BookingRepository;
 import com.onlinepetconsultation.repository.ConsultantRepository;
 import com.onlinepetconsultation.repository.UserRepository;
@@ -29,7 +29,7 @@ public class BookingDao {
 	public Booking bookingOrderConsultant(int userId, int consultantId) {
 
 		Users user = userRepository.findById(userId)
-				.orElseThrow(() -> new UsersNotFoundException("User with the ID " + userId + " is not found"));
+				.orElseThrow(() -> new UserNotFoundException("User with the ID " + userId + " is not found"));
 
 		Consultant consultant = consultantRepository.findById(consultantId).orElseThrow(
 				() -> new ConsultantNotFoundException("Consultant with the ID " + consultantId + " is not found"));

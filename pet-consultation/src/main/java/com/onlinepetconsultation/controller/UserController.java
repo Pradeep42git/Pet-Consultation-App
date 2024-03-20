@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onlinepetconsultation.dto.AdminDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.dto.UsersDto;
-import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.entity.Consultant;
 import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
@@ -85,7 +83,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/get-all-user")
-	public ResponseEntity<ResponseStructure<List<Users>>> getConsultant() {
+	public ResponseEntity<ResponseStructure<List<Users>>> getUsers() {
 		return userService.getAllUsers();
 	}
 

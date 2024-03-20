@@ -8,7 +8,7 @@ import com.onlinepetconsultation.entity.Users;
 
 public interface UserRepository extends JpaRepository<Users, Integer> {
 
-public Users findByName(String name);
-	
-	Optional<Users> findByEmailAndPassword(String email,String password);
+	public Users findByUserName(String name);
+
+	Optional<Users> findByUserEmailAndUserPassword(String email, String password);
 }
