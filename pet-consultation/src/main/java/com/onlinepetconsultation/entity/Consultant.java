@@ -2,6 +2,7 @@ package com.onlinepetconsultation.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlinepetconsultation.util.ConsultantRoles;
 
 import jakarta.persistence.CascadeType;
@@ -54,8 +55,7 @@ public class Consultant {
 	@Enumerated(EnumType.STRING)
 	private ConsultantRoles designation;
 
-
-	
 	@OneToMany(mappedBy = "consultant",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@JsonIgnore
 	private List<Booking> booking;
 }
