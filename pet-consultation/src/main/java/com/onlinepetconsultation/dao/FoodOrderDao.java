@@ -3,12 +3,9 @@ package com.onlinepetconsultation.dao;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import javax.print.attribute.standard.DateTimeAtCreation;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.exception.FoodOrderNotFoundException;
 import com.onlinepetconsultation.repository.FoodOrderRepository;

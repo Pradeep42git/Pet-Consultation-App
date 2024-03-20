@@ -51,4 +51,14 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		responseStructure.setData(notFoundException.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(FoodOrderNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> foodOrderNotFoundException(
+			FoodOrderNotFoundException notFoundException) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setMessage("Food Order Not found ");
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setData(notFoundException.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
 }
