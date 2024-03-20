@@ -10,15 +10,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.onlinepetconsultation.entity.FoodOrder;
-import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
-import com.onlinepetconsultation.dto.FoodDto;
+import com.onlinepetconsultation.dto.BookingResponse;
+import com.onlinepetconsultation.dto.FoodOrderDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
-import com.onlinepetconsultation.entity.Booking;
+import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
+import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
+
+
+
 
 @RestController
-@RequestMapping("/onlinepetconsultation/bs")
+@RequestMapping("/opc/bs")
 public class BookingServiceController {
 	@Autowired
 	private FoodOrderServicesImp foodOrderServices;
@@ -26,11 +29,9 @@ public class BookingServiceController {
 	private BookingService bookingService;
 	
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodDto dto,@PathVariable int user_id) throws Exception{
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id) throws Exception{
 		return foodOrderServices.saveFoodOrder(dto, user_id);
-		
 	}
-	
 	@GetMapping("/search/{order_id}")
 	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id){
 		return foodOrderServices.searchFoodOrder(order_id);
@@ -48,16 +49,16 @@ public class BookingServiceController {
 	
 		
 	@PostMapping("/{userId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId, @PathVariable int consultantId){
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
 	
 	@GetMapping("get/{bookingId}")
-	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(@PathVariable int bookingId){
+	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(@PathVariable int bookingId){
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
-	@DeleteMapping("get/{bookingId}")
+	@DeleteMapping("delete/{bookingId}")
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}

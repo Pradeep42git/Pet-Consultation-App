@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.onlinepetconsultation.dao.BookingDao;
+import com.onlinepetconsultation.dto.BookingResponse;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.services.BookingService;
@@ -16,31 +17,47 @@ public class BookingServicesImp implements BookingService {
 	@Autowired
 	private BookingDao bookingDao;
 
-	public ResponseEntity<ResponseStructure<Booking>> bookingOrderConsultant(int userId, int consultantId) {
+	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(int userId, int consultantId) {
 
 		Booking booking = bookingDao.bookingOrderConsultant(userId, consultantId);
 
-		ResponseStructure<Booking> responseStructure = new ResponseStructure<Booking>();
+		ResponseStructure<BookingResponse> responseStructure = new ResponseStructure<BookingResponse>();
+		
+		BookingResponse bookingResponse = BookingResponse
+				.builder()
+				.Id(booking.getId())
+				.bookingDateTime(booking.getBookingDateTime())
+				.user(booking.getUser())
+				.consultant(booking.getConsultant())
+				.build();
 
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
 		responseStructure.setMessage(HttpStatus.CREATED.getReasonPhrase());
-		responseStructure.setData(booking);
+		responseStructure.setData(bookingResponse);
 
-		return new ResponseEntity<ResponseStructure<Booking>>(responseStructure, HttpStatus.CREATED);
-
+		return new ResponseEntity<ResponseStructure<BookingResponse>>(responseStructure, HttpStatus.CREATED);
+		
 	}
 
-	public ResponseEntity<ResponseStructure<Booking>> searchBookingOrder(int bookingId) {
+	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(int bookingId) {
 
 		Booking booking = bookingDao.searchBookingOrder(bookingId);
 
-		ResponseStructure<Booking> responseStructure = new ResponseStructure<Booking>();
+		ResponseStructure<BookingResponse> responseStructure = new ResponseStructure<BookingResponse>();
+		
+		BookingResponse bookingResponse = BookingResponse
+				.builder()
+				.Id(booking.getId())
+				.bookingDateTime(booking.getBookingDateTime())
+				.user(booking.getUser())
+				.consultant(booking.getConsultant())
+				.build();
 
 		responseStructure.setStatusCode(HttpStatus.FOUND.value());
 		responseStructure.setMessage(HttpStatus.FOUND.getReasonPhrase());
-		responseStructure.setData(booking);
+		responseStructure.setData(bookingResponse);
 
-		return new ResponseEntity<ResponseStructure<Booking>>(responseStructure, HttpStatus.FOUND);
+		return new ResponseEntity<ResponseStructure<BookingResponse>>(responseStructure, HttpStatus.FOUND);
 
 	}
 

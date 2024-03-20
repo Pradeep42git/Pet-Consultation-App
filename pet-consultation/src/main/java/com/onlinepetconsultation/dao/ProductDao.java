@@ -51,7 +51,14 @@ public class ProductDao {
 	}
 	
 	/*
-	 * This method is used to get All the Product list
+	 * This method is used to get All the Product list if isAvailable is true for users
+	 */
+	public List<Product> getAllProducts(boolean status){
+		return productRepository.findByIsAvailable(status);
+	}
+	
+	/*
+	 * This method is used to get All the Product list for admin
 	 */
 	public List<Product> getAllProducts(){
 		return productRepository.findAll();
