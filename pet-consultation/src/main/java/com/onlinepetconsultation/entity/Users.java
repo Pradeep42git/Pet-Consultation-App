@@ -63,7 +63,9 @@ public class Users {
 	@JsonIgnore
 	List<Booking> booking;
 	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	List<FoodOrder> foodOrders;
 	
 
