@@ -9,5 +9,7 @@ import com.onlinepetconsultation.util.ConsultantRoles;
 
 public interface ConsultantRepository extends JpaRepository<Consultant, Integer> {
 
-	public List<Consultant> findByDesignation(ConsultantRoles designation);
+	public List<Consultant> findByDesignationAndIsAvailable(ConsultantRoles designation,boolean status);
+	
+	public List<Consultant> findByIsAvailable(boolean status);
 }

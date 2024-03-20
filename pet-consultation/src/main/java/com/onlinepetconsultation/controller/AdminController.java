@@ -69,7 +69,7 @@ public class AdminController {
 
 	@GetMapping("/get-all-consultant")
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultant() {
-		return consultantService.getAllConsultants();
+		return consultantService.getAllConsultantsForAdmin();
 	}
 
 	@PutMapping("/update-consultant/{adminId}/{consultantId}")
