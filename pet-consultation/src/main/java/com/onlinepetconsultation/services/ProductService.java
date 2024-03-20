@@ -13,7 +13,7 @@ public interface ProductService {
 	/*
 	 * Performs save operation and returns Product created Response
 	 */
-	ResponseEntity<ResponseStructure<Product>> saveProduct(ProductDto productDto, int adminId);
+	ResponseEntity<ResponseStructure<Product>> saveProduct(ProductDto productDto);
 
 	/*
 	 * Performs get operation and returns Product List fetched Response for Users
@@ -28,10 +28,10 @@ public interface ProductService {
 	/*
 	 * Performs update operation and returns the updated Product Response for Admin
 	 */
-	ResponseEntity<ResponseStructure<Product>> updateProduct(int adminId, ProductDto updateProduct, int productId);
+	ResponseEntity<ResponseStructure<Product>> updateProduct(ProductDto updateProduct, int productId);
 
 	/*
 	 * Performs delete operations by setting field in false
 	 */
-	ResponseEntity<ResponseStructure<String>> deleteProduct(int adminId, int productId);
+	ResponseEntity<ResponseStructure<String>> deleteProduct(int productId);
 }
