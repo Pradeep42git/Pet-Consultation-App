@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.onlinepetconsultation.dto.BookingResponse;
 import com.onlinepetconsultation.dto.FoodOrderDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
@@ -18,23 +17,24 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
+
+
+
 @RestController
 @RequestMapping("/opc/bs")
 public class BookingServiceController {
 	@Autowired
-	FoodOrderServicesImp foodOrderServices;
+	private FoodOrderServicesImp foodOrderServices;
 	@Autowired
 	private BookingService bookingService;
 	
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrder(@RequestBody FoodOrderDto food,@PathVariable int user_id){
-		return foodOrderServices.saveFoodOrder(food, user_id);
-		
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id) throws Exception{
+		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
-	
-	@GetMapping("/search")
-	public ResponseEntity<?> searchFoodOrder(@PathVariable int id){
-		return foodOrderServices.searchFoodOrder(id);
+	@GetMapping("/search/{order_id}")
+	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id){
+		return foodOrderServices.searchFoodOrder(order_id);
 	}
 	
 	@PutMapping("/update/{order_id}")
@@ -42,9 +42,9 @@ public class BookingServiceController {
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
 	
-	@DeleteMapping("/delete/{order_id}")
-	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id){
-		return foodOrderServices.deleteFoodOrder(order_id);
+	@DeleteMapping("{user_id}/delete_food/{order_id}")
+	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id){
+		return foodOrderServices.deleteFoodOrder(order_id, user_id);
 	}
 	
 		
@@ -58,7 +58,7 @@ public class BookingServiceController {
 		return bookingService.searchBookingOrder(bookingId);
 	}
 	
-	@DeleteMapping("delete/{bookingId}")
+	@DeleteMapping("delete_booking/{bookingId}")
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId){
 		return bookingService.deleteBookingOrder(bookingId);
 	}

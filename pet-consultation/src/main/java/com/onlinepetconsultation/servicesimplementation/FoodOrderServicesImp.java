@@ -17,7 +17,10 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.entity.Product;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.FoodOrderNotFoundException;
-import com.onlinepetconsultation.exception.UsersNotFoundException;
+
+import com.onlinepetconsultation.exception.ProductNotExistException;
+import com.onlinepetconsultation.exception.UserNotFoundException;
+import com.onlinepetconsultation.repository.ProductRepository;
 import com.onlinepetconsultation.repository.UserRepository;
 import com.onlinepetconsultation.services.FoodOrderService;
 
@@ -26,60 +29,86 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	@Autowired
 	FoodOrderDao foodOrderDao;
 	@Autowired
-	ResponseStructure<FoodOrder>responseStructure ;
+	ResponseStructure<FoodOrder> responseStructure;
 	@Autowired
-	ResponseStructure<String>responseStructure1 ;
+	ResponseStructure<String> responseStructure1;
 	@Autowired
 	Users users;
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
+	ProductRepository productRepository;
+	@Autowired
 	ProductDao dao;
-	
-	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food,int id){
-		Users user = userRepository.findById(id).orElseThrow(()-> new UsersNotFoundException("No User Found"));
-		FoodOrder foodOrder=new FoodOrder();
-		foodOrder.setCost(food.getCost());
+
+	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food, int id) {
+		Users user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No User Found"));
+		FoodOrder foodOrder = new FoodOrder();
 		foodOrder.setOrderStatus(food.isOrderStatus());
 		foodOrder.setFoodorderDateTime(LocalDateTime.now());
-		List<Product> products=new ArrayList<Product>();
+		double foodBill = 0;
+		List<Product> products = new ArrayList<Product>();
 		for (Integer product : food.getProducts()) {
-			Product product2=dao.getProductById(product);
-			if(product2!=null) {
+			Product product2 = dao.getProductById(product);
+			if (product2 != null) {
+				foodBill = product2.getTotalCost() + foodBill;
 				products.add(product2);
+			} else {
+				throw new ProductNotExistException("Product with ID " + product + " not found");
 			}
 		}
+		List<FoodOrder> foodList = (user.getFoodOrders().isEmpty() || user.getFoodOrders() == null)?new ArrayList<FoodOrder>():user.getFoodOrders();
+		foodOrder.setCost(foodBill);
 		foodOrder.setProducts(products);
+		foodList.add(foodOrder);
+		user.setFoodOrders(foodList);
 		foodOrderDao.saveFoodOrder(foodOrder);
 		responseStructure.setData(foodOrder);
-		responseStructure.setMessage(HttpStatus.FOUND.getReasonPhrase());
-		responseStructure.setStatusCode(HttpStatus.FOUND.value());
-		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.FOUND);
+		responseStructure.setMessage(HttpStatus.CREATED.getReasonPhrase());
+		responseStructure.setStatusCode(HttpStatus.CREATED.value());
+		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.CREATED);
 	}
-	
-	public ResponseEntity<?> searchFoodOrder(int id){
-		FoodOrder order = foodOrderDao.searchFoodOrder(id).orElseThrow(()->new FoodOrderNotFoundException("Order Not Found"));
+
+	public ResponseEntity<?> searchFoodOrder(int id) {
+		FoodOrder order = foodOrderDao.searchFoodOrder(id)
+				.orElseThrow(() -> new FoodOrderNotFoundException("Order Not Found"));
 		responseStructure.setData(order);
 		responseStructure.setMessage(HttpStatus.FOUND.getReasonPhrase());
 		responseStructure.setStatusCode(HttpStatus.FOUND.value());
 		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.FOUND);
 	}
-	
-	public ResponseEntity<?> updateFoodOrder(int id,FoodOrder order){
+
+	public ResponseEntity<?> updateFoodOrder(int id, FoodOrder order) {
 		responseStructure.setData(foodOrderDao.updatefoodOrder(id, order));
 		responseStructure.setMessage(HttpStatus.OK.getReasonPhrase());
 		responseStructure.setStatusCode(HttpStatus.OK.value());
-		
-		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure,HttpStatus.OK);
-		
+
+		return new ResponseEntity<ResponseStructure<FoodOrder>>(responseStructure, HttpStatus.OK);
+
 	}
-	
-	public ResponseEntity<?> deleteFoodOrder(int id){
-		responseStructure1.setData(foodOrderDao.deleteFoodOrder(id));
+
+	public ResponseEntity<?> deleteFoodOrder(int order_id, int user_id) {
+		Users user = userRepository.findById(user_id).orElseThrow(() -> new UserNotFoundException("User with ID "+user_id+" is not found"));
+		List<FoodOrder> fos = user.getFoodOrders();
+		FoodOrder fo = null;
+		for(FoodOrder food : fos) {
+			if(food.getId() == order_id) {
+				fo = food;
+			}
+			else {
+				throw new FoodOrderNotFoundException("Food Order with ID "+order_id+" is not found");
+			}
+		}
+		fos.remove(fo);
+		user.setFoodOrders(fos);
+		
+		userRepository.save(user);
+		
+		responseStructure1.setData(foodOrderDao.deleteFoodOrder(fo.getId()));
 		responseStructure1.setMessage(HttpStatus.OK.getReasonPhrase());
 		responseStructure1.setStatusCode(HttpStatus.OK.value());
-		
-		return new ResponseEntity<ResponseStructure<String>>(responseStructure1,HttpStatus.OK);
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure1, HttpStatus.OK);
 	}
 
 }
