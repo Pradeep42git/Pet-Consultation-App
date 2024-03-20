@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
-
+import com.onlinepetconsultation.dto.FoodDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.services.BookingService;
@@ -21,19 +21,19 @@ import com.onlinepetconsultation.services.BookingService;
 @RequestMapping("/onlinepetconsultation/bs")
 public class BookingServiceController {
 	@Autowired
-	FoodOrderServicesImp foodOrderServices;
+	private FoodOrderServicesImp foodOrderServices;
 	@Autowired
 	private BookingService bookingService;
 	
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrder(@RequestBody FoodOrder food,@PathVariable int user_id){
-		return foodOrderServices.saveFoodOrder(food, user_id);
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodDto dto,@PathVariable int user_id) throws Exception{
+		return foodOrderServices.saveFoodOrder(dto, user_id);
 		
 	}
 	
-	@GetMapping("/search")
-	public ResponseEntity<?> searchFoodOrder(@PathVariable int id){
-		return foodOrderServices.searchFoodOrder(id);
+	@GetMapping("/search/{order_id}")
+	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id){
+		return foodOrderServices.searchFoodOrder(order_id);
 	}
 	
 	@PutMapping("/update/{order_id}")

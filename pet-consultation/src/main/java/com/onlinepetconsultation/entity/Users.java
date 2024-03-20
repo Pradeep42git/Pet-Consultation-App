@@ -60,7 +60,7 @@ public class Users {
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	List<Booking> booking;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany
 	List<FoodOrder> foodOrders;
 	
 

@@ -38,8 +38,8 @@ public class FoodOrder {
 	@NotNull
 	@Positive
 	private double cost;
-
-	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	
+	@OneToMany
 	private List<Product> products;
 
 }
