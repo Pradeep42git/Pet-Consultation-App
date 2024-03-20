@@ -31,7 +31,6 @@ public class FoodOrder {
 
 	private boolean orderStatus;
 
-	@NotNull
 	@Positive
 	private double cost;
 
