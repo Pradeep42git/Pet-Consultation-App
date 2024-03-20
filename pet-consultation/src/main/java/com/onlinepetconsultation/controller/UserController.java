@@ -30,6 +30,7 @@ public class UserController {
 		return productService.getAllProductByIsAvailable();
 	}
 	
+	
 	@GetMapping("/get-consultant-designation")
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantByDesignation(@RequestParam String designation){
 		return consultantService.getAllConsultants();
