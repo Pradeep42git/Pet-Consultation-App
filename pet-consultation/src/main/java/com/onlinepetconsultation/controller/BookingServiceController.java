@@ -28,7 +28,7 @@ import jakarta.validation.ValidationException;
  */
 
 @RestController
-@RequestMapping("/opc/bs")
+@RequestMapping("/onlinepetconsultantion/bookingservices")
 public class BookingServiceController {
 	@Autowired
 	private FoodOrderServicesImp foodOrderServices;

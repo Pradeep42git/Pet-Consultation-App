@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.onlinepetconsultation.repository.AdminRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service(value = "admindetailservices")
 @RequiredArgsConstructor
+@Slf4j
 public class CustomAdminDetailService implements UserDetailsService {
 	
 	@Autowired
@@ -20,7 +22,10 @@ public class CustomAdminDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return adminRepository.findByEmail(username).orElse(null);
+		
+		UserDetails details=adminRepository.findByEmail(username).orElse(null);
+		log.info(""+details);
+		return details;
 	}
 
 }
