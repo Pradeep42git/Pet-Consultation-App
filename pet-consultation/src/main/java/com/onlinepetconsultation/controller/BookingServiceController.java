@@ -1,6 +1,7 @@
 package com.onlinepetconsultation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 /*
  * this controller class deals with CRUD operations related to consultant booking 
@@ -33,6 +37,8 @@ public class BookingServiceController {
 	
 	//save the food order and generate a bill based on product cost and create a response object as FoodOrder
 	//to a specific user
+//	@ApiResponse(description = "To create Food Order",responseCode = "201", useReturnTypeSchema = true)
+//	@Operation(summary = "create food Order", description = "Create Food Order by a user")
 	@PostMapping("{user_id}/food")
 	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id){
 		return foodOrderServices.saveFoodOrder(dto, user_id);
