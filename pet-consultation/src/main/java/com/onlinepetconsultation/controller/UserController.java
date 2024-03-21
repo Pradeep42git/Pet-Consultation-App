@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.services.ConsultantService;
 import com.onlinepetconsultation.services.ProductService;
 import com.onlinepetconsultation.services.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/opc/user")
@@ -53,7 +56,7 @@ public class UserController {
 	}
 
 	@PostMapping("/save-user")
-	public ResponseEntity<ResponseStructure<Users>> saveUser(@RequestBody UsersDto usersDto) {
+	public ResponseEntity<ResponseStructure<Users>> saveUser(@Valid @RequestBody UsersDto usersDto, BindingResult result) {
 		return userService.saveUser(usersDto);
 
 	}
@@ -77,7 +80,7 @@ public class UserController {
 	}
 
 	@PutMapping("/update-user/{userId}")
-	public ResponseEntity<ResponseStructure<Users>> updateUser(@RequestBody UsersDto usersDto,
+	public ResponseEntity<ResponseStructure<Users>> updateUser(@Valid @RequestBody UsersDto usersDto, BindingResult result,
 			@PathVariable int userId) {
 		return userService.updateUser(usersDto, userId);
 

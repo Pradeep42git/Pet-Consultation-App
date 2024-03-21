@@ -2,6 +2,8 @@ package com.onlinepetconsultation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,9 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+
 @RestController
 @RequestMapping("/opc/bs")
 public class BookingServiceController {
@@ -26,7 +31,16 @@ public class BookingServiceController {
 	private BookingService bookingService;
 
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto, @PathVariable int user_id) throws Exception {
+	public ResponseEntity<?> saveFoodOrders(@Valid @RequestBody FoodOrderDto dto, BindingResult result, @PathVariable int user_id) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
 
@@ -36,7 +50,16 @@ public class BookingServiceController {
 	}
 
 	@PutMapping("/update/{order_id}")
-	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @RequestBody FoodOrder order) {
+	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @Valid @RequestBody FoodOrder order, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
 

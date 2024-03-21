@@ -35,6 +35,7 @@ public class UsersDto {
 
 	@Min(value = 6000000000l)
 	@Max(value = 9999999999l)
+	@Size
 	private long userPhone;
 
 	private String userAddress;
