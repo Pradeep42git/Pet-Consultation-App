@@ -18,8 +18,8 @@ import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
 /*
- * this controller class deals with CRUD operations related to consultant 
- * booking and Food ordering. 
+ * this controller class deals with CRUD operations related to consultant booking 
+ * and Food ordering. 
  */
 
 

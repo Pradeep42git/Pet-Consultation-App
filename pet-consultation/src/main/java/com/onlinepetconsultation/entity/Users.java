@@ -1,10 +1,15 @@
 package com.onlinepetconsultation.entity;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.onlinepetconsultation.util.Roles;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,8 +34,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class Users {
+public class Users implements UserDetails {
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_id")
 	@SequenceGenerator(name = "user_id", initialValue = 1, allocationSize = 1, sequenceName = "user_sequence")
@@ -50,8 +58,8 @@ public class Users {
 	
 	@NotNull
 	@Size(min = 3, message = "Password should consist of at least 3 characters")
-	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$" ,message = "Invalid password format" )
-	private String userPassword;
+//	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$" ,message = "Invalid password format" )
+	private String password;
 	
 	@Min(value = 6000000000l)
 	@Max(value = 9999999999l)
@@ -65,8 +73,44 @@ public class Users {
 	
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
+	@JsonIgnore/*
+	 * Performs delete operations on admin based on id
+	 */
 	List<FoodOrder> foodOrders;
-	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return List.of(new SimpleGrantedAuthority(Roles.USER.name()));
+	}
+	@Override
+	public String getUsername() {
+		
+		return userEmail;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		
+		return true;
+	}
 
+
+
+	
+	
+	
 }

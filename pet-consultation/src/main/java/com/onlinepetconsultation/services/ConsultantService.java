@@ -11,15 +11,38 @@ import com.onlinepetconsultation.entity.Consultant;
 
 public interface ConsultantService {
 
-	ResponseEntity<ResponseStructure<Consultant>> saveConsultant(ConsultantDto consultantDto, int adminId);
-	
-	ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultants();
-	
+	/*
+	 * Performs save operation and returns Consultant created Response
+	 */
+	ResponseEntity<ResponseStructure<Consultant>> saveConsultant(ConsultantDto consultantDto);
+
+	/*
+	 * perform the retrive list of consultant operation for the Admin
+	 */
+	ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultantsForAdmin();
+
+	/*
+	 * perform the retrive list of consultant operation for the users
+	 */
+	ResponseEntity<ResponseStructure<List<Consultant>>> getAllConsultantsForUsers();
+
+	/*
+	 * perform the retrive list of consultant opertion by giving the designation
+	 */
 	ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantsByDesignation(String designation);
-	
-	ResponseEntity<ResponseStructure<Consultant>> updateConsultant(ConsultantDto consultantDto, int adminId,int consultantId);
-	
-	ResponseEntity<ResponseStructure<String>> removeConsultant(int consultantId, int adminId);
-	
-	ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(int consultantId, int adminId);
+
+	/*
+	 * perform the update operation for the consultant by using consultantId
+	 */
+	ResponseEntity<ResponseStructure<Consultant>> updateConsultant(ConsultantDto consultantDto, int consultantId);
+
+	/*
+	 * Performs delete operations by setting field in false
+	 */
+	ResponseEntity<ResponseStructure<String>> removeConsultant(int consultantId);
+
+	/*
+	 * perform the get bookings of any consultant by consultant Id
+	 */
+	ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(int consultantId);
 }

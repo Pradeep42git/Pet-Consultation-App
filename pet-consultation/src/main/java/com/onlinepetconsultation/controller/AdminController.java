@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.onlinepetconsultation.dto.AdminDto;
 import com.onlinepetconsultation.dto.ConsultantDto;
+import com.onlinepetconsultation.dto.JWTResponse;
 import com.onlinepetconsultation.dto.ProductDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.entity.Consultant;
@@ -38,10 +40,9 @@ public class AdminController {
 	@Autowired
 	private ConsultantService consultantService;
 
-	@PostMapping("/save-product/{adminId}")
-	public ResponseEntity<ResponseStructure<Product>> saveProduct(@RequestBody ProductDto productDto,
-			@PathVariable int adminId) {
-		return productService.saveProduct(productDto, adminId);
+	@PostMapping("/save-product")
+	public ResponseEntity<ResponseStructure<Product>> saveProduct(@RequestBody ProductDto productDto) {
+		return productService.saveProduct(productDto);
 	}
 
 	@GetMapping("/admin-product-list")
@@ -49,45 +50,41 @@ public class AdminController {
 		return productService.getAllProduct();
 	}
 
-	@PutMapping("/update-product/{adminId}/{productId}")
-	public ResponseEntity<ResponseStructure<Product>> updateProduct(@PathVariable int adminId,
-			@RequestBody ProductDto updateProduct, @PathVariable int productId) {
-		return productService.updateProduct(adminId, updateProduct, productId);
-	}
-
-	@DeleteMapping("/remove-product/{adminId}/{productId}")
-	public ResponseEntity<ResponseStructure<String>> deleteProduct(@PathVariable int adminId,
+	@PutMapping("/update-product/{productId}")
+	public ResponseEntity<ResponseStructure<Product>> updateProduct(@RequestBody ProductDto updateProduct,
 			@PathVariable int productId) {
-		return productService.deleteProduct(adminId, productId);
+		return productService.updateProduct(updateProduct, productId);
 	}
 
-	@PostMapping("/save-consultant/{adminId}")
-	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(@RequestBody ConsultantDto consultantDto,
-			@PathVariable int adminId) {
-		return consultantService.saveConsultant(consultantDto, adminId);
+	@DeleteMapping("/remove-product/{productId}")
+	public ResponseEntity<ResponseStructure<String>> deleteProduct(@PathVariable int productId) {
+		return productService.deleteProduct(productId);
+	}
+
+	@PostMapping("/save-consultant")
+	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(@RequestBody ConsultantDto consultantDto) {
+		return consultantService.saveConsultant(consultantDto);
 	}
 
 	@GetMapping("/get-all-consultant")
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultant() {
-		return consultantService.getAllConsultants();
+		return consultantService.getAllConsultantsForAdmin();
 	}
 
-	@PutMapping("/update-consultant/{adminId}/{consultantId}")
+	@PutMapping("/update-consultant/{consultantId}")
 	public ResponseEntity<ResponseStructure<Consultant>> updateConsultant(@RequestBody ConsultantDto consultantDto,
-			@PathVariable int adminId, @PathVariable int consultantId) {
-		return consultantService.updateConsultant(consultantDto, adminId, consultantId);
-	}
-
-	@GetMapping("/get-all-bookings/{consultantId}/{adminId}")
-	public ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(@PathVariable int consultantId,
-			@PathVariable int adminId) {
-		return consultantService.getAllBookings(consultantId, adminId);
-	}
-
-	@DeleteMapping("/remove-consultant/{adminId}/{consultantId}")
-	public ResponseEntity<ResponseStructure<String>> removeConsultant(@PathVariable int adminId,
 			@PathVariable int consultantId) {
-		return consultantService.removeConsultant(consultantId, adminId);
+		return consultantService.updateConsultant(consultantDto, consultantId);
+	}
+
+	@GetMapping("/get-all-bookings/{consultantId}")
+	public ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(@PathVariable int consultantId) {
+		return consultantService.getAllBookings(consultantId);
+	}
+
+	@DeleteMapping("/remove-consultant/{consultantId}")
+	public ResponseEntity<ResponseStructure<String>> removeConsultant(@PathVariable int consultantId) {
+		return consultantService.removeConsultant(consultantId);
 	}
 
 	@PostMapping("/save-admin")
@@ -107,9 +104,24 @@ public class AdminController {
 		return adminService.getByName(adminName);
 
 	}
+
 	@DeleteMapping("/remove-admin/{adminId}")
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(@PathVariable int adminId) {
 		return adminService.deleteAdmin(adminId);
 
+	}
 
-}}
+	@PutMapping("/update-admin/{adminId}")
+	public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@RequestBody AdminDto adminDto,
+			@PathVariable int adminId) {
+		return adminService.updateAdmin(adminDto, adminId);
+
+	}
+	
+	@PostMapping("/admin-login")
+	public ResponseEntity<ResponseStructure<JWTResponse>> adminLogin(@RequestBody SignInRequest request){
+		return adminService.adminLogin(request);
+	}
+	
+	
+}
