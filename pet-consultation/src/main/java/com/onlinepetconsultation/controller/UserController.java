@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.onlinepetconsultation.services.ProductService;
 import com.onlinepetconsultation.services.UserService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 
 @RestController
 @RequestMapping("/opc/user")
@@ -57,6 +59,15 @@ public class UserController {
 
 	@PostMapping("/save-user")
 	public ResponseEntity<ResponseStructure<Users>> saveUser(@Valid @RequestBody UsersDto usersDto, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return userService.saveUser(usersDto);
 
 	}
@@ -82,6 +93,15 @@ public class UserController {
 	@PutMapping("/update-user/{userId}")
 	public ResponseEntity<ResponseStructure<Users>> updateUser(@Valid @RequestBody UsersDto usersDto, BindingResult result,
 			@PathVariable int userId) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return userService.updateUser(usersDto, userId);
 
 	}

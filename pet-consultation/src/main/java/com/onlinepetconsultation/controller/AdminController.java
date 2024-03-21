@@ -131,6 +131,15 @@ public class AdminController {
 	@PostMapping("/save-admin")
 	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@Valid @RequestBody AdminDto adminDto,
 			BindingResult result) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return adminService.saveAdmin(adminDto);
 
 	}

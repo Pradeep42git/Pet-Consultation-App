@@ -19,7 +19,7 @@ public class UserServicesImp implements UserService {
 
 	@Autowired
 	private UserDao usersDao;
-	
+
 	/*
 	 * Performs save operation and returns user save Response
 	 */
@@ -36,12 +36,12 @@ public class UserServicesImp implements UserService {
 		Users createdUser = usersDao.createUser(user);
 		ResponseStructure<Users> responseStructure = new ResponseStructure<Users>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
-		responseStructure.setMessage(" user saved succesfully");
+		responseStructure.setMessage("User saved succesfully");
 		responseStructure.setData(createdUser);
 		return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.CREATED);
 
 	}
-	
+
 	/*
 	 * Performs get operation based on id and returns user fetched Response
 	 */
@@ -52,7 +52,7 @@ public class UserServicesImp implements UserService {
 		if (user != null) {
 			ResponseStructure<Users> responseStructure = new ResponseStructure<>();
 			responseStructure.setStatusCode(HttpStatus.OK.value());
-			responseStructure.setMessage(" user found");
+			responseStructure.setMessage("User found");
 			responseStructure.setData(user);
 			return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.OK);
 		} else {
@@ -60,7 +60,6 @@ public class UserServicesImp implements UserService {
 		}
 	}
 
-	
 	/*
 	 * Performs get operation based on name and returns user fetched Response
 	 */
@@ -70,7 +69,7 @@ public class UserServicesImp implements UserService {
 		if (user != null) {
 			ResponseStructure<Users> responseStructure = new ResponseStructure<>();
 			responseStructure.setStatusCode(HttpStatus.OK.value());
-			responseStructure.setMessage(" user found");
+			responseStructure.setMessage("User found");
 			responseStructure.setData(user);
 			return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.OK);
 		} else {
@@ -88,13 +87,13 @@ public class UserServicesImp implements UserService {
 			ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 			responseStructure.setStatusCode(HttpStatus.OK.value());
 			responseStructure.setMessage("user deleted");
-			responseStructure.setData("user removed successfully");
+			responseStructure.setData("User removed successfully");
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setStatusCode(HttpStatus.OK.value());
 		responseStructure.setMessage("user not deleted");
-		responseStructure.setData("user not removed");
+		responseStructure.setData("User not removed");
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 	}
 
@@ -125,13 +124,12 @@ public class UserServicesImp implements UserService {
 
 		ResponseStructure<Users> responseStructure = new ResponseStructure<Users>();
 		responseStructure.setStatusCode(HttpStatus.CREATED.value());
-		responseStructure.setMessage(" Admin updated succesfully");
+		responseStructure.setMessage("User updated succesfully");
 		responseStructure.setData(receivedUser);
 		return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.CREATED);
 
 	}
 
-	
 	/*
 	 * Performs get operations on user and returns list of users
 	 */

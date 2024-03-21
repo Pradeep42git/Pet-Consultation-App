@@ -33,9 +33,8 @@ public class UsersDto {
 	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$", message = "Invalid password format")
 	private String userPassword;
 
-	@Min(value = 6000000000l)
-	@Max(value = 9999999999l)
-	@Size
+	@Min(value = 6000000000l, message = "Phone number should range from 6000000000 to 9999999999")
+	@Max(value = 9999999999l, message = "Phone number should range from 6000000000 to 9999999999")
 	private long userPhone;
 
 	private String userAddress;
