@@ -17,7 +17,10 @@ import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 
-
+/*
+ * this controller class deals with CRUD operations related to consultant 
+ * booking and Food ordering. 
+ */
 
 
 @RestController
@@ -28,20 +31,27 @@ public class BookingServiceController {
 	@Autowired
 	private BookingService bookingService;
 	
+	//save the food order and generate a bill based on product cost and create a response object as FoodOrder
+	//to a specific user
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id) throws Exception{
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id){
 		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
+	
+	// search the food Order based on FoodOrder Id and return the response object as FoodOrder
 	@GetMapping("/search/{order_id}")
 	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id){
 		return foodOrderServices.searchFoodOrder(order_id);
 	}
 	
+	// update the food order by getting their id and FoodOrder Object 
 	@PutMapping("/update/{order_id}")
 	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @RequestBody FoodOrder order){
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
 	
+	//delete the food order by giving user Id and order Id.
+	//	here, user id is taken to remove the Food order reference present in the Users entity.
 	@DeleteMapping("{user_id}/delete_food/{order_id}")
 	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id){
 		return foodOrderServices.deleteFoodOrder(order_id, user_id);
