@@ -38,7 +38,7 @@ public class AdminServicesImp implements AdminService {
 	private UserDetailsService detailsService;
 	@Autowired
 	private JWTService jwtService;
-	
+
 	/*
 	 * Performs save operation and returns Admin save Response
 	 */
@@ -145,33 +145,36 @@ public class AdminServicesImp implements AdminService {
 		return new ResponseEntity<ResponseStructure<Admin>>(responseStructure, HttpStatus.OK);
 
 	}
+
 	/*
 	 * Performs Login operation for Admin
 	 */
 	@Override
 	public ResponseEntity<ResponseStructure<JWTResponse>> adminLogin(SignInRequest request) {
-		doAuthenticate(request.getEmail(),request.getPassword());
-		UserDetails userDetails=detailsService.loadUserByUsername(request.getEmail());
-		String token=this.jwtService.generateToken(userDetails);
-		JWTResponse jwtResponse=JWTResponse.builder().jwtToken(token).userName(userDetails.getUsername()).build();
+		doAuthenticate(request.getEmail(), request.getPassword());
+		UserDetails userDetails = detailsService.loadUserByUsername(request.getEmail());
+		String token = this.jwtService.generateToken(userDetails);
+		JWTResponse jwtResponse = JWTResponse.builder().jwtToken(token).userName(userDetails.getUsername()).build();
 		ResponseStructure<JWTResponse> responseStructure = new ResponseStructure<JWTResponse>();
 		responseStructure.setStatusCode(HttpStatus.OK.value());
-		responseStructure.setMessage("Login Successfully "+userDetails.getUsername());
+		responseStructure.setMessage("Login Successfully " + userDetails.getUsername());
 		responseStructure.setData(jwtResponse);
 		return new ResponseEntity<ResponseStructure<JWTResponse>>(responseStructure, HttpStatus.OK);
 	}
 
 	private void doAuthenticate(String email, String password) {
-		UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(email, password);
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
+				password);
 		System.err.println(authenticationToken);
-		try {
-			Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-			System.err.println(authenticate);
-			if(authenticate.getAuthorities().isEmpty()) {
-				throw new BadCredentialsException("Invalid Username or Password ..!!" );
+		if (authenticationToken.isAuthenticated()) {
+			try {
+				Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+				System.err.println(authenticate);
+			} catch (BadCredentialsException e) {
+				throw new BadCredentialsException("Invalid Username or Password ..!!");
 			}
-		}catch (BadCredentialsException e) {
-			throw new BadCredentialsException("Invalid Username or Password ..!!" );
+		} else {
+			throw new BadCredentialsException("Invalid Username or Password ..!!");
 		}
 	}
 

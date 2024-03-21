@@ -1,7 +1,6 @@
 package com.onlinepetconsultation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Description;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,9 +18,7 @@ import com.onlinepetconsultation.dto.ResponseStructure;
 import com.onlinepetconsultation.entity.FoodOrder;
 import com.onlinepetconsultation.services.BookingService;
 import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
-
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -31,8 +28,10 @@ import jakarta.validation.ValidationException;
  * and Food ordering. 
  */
 
-@RestController(value = "Booking Service Controller")
-@RequestMapping("/opc/bs")
+
+
+@RequestMapping("/onlinepetconsultantion/bookingservices")
+@RestController
 public class BookingServiceController {
 	@Autowired
 	private FoodOrderServicesImp foodOrderServices;

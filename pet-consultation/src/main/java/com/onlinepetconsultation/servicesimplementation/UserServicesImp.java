@@ -187,10 +187,14 @@ public class UserServicesImp implements UserService {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
 				password);
 		System.err.println(authenticationToken);
-		try {
-			Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-			System.out.println(authenticate);
-		} catch (BadCredentialsException e) {
+		if (authenticationToken.isAuthenticated()) {
+			try {
+				Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+				System.err.println(authenticate);
+			} catch (BadCredentialsException e) {
+				throw new BadCredentialsException("Invalid Username or Password ..!!");
+			}
+		} else {
 			throw new BadCredentialsException("Invalid Username or Password ..!!");
 		}
 	}
