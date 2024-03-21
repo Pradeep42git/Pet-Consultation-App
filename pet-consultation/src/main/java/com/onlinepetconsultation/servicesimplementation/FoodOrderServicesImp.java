@@ -44,7 +44,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	// save the food order and generate a bill based on product cost and create a
 	// response object as FoodOrder
 	// to a specific user
-	public ResponseEntity<?> saveFoodOrder(FoodOrderDto food, int id) {
+	public ResponseEntity<ResponseStructure<FoodOrder>> saveFoodOrder(FoodOrderDto food, int id) {
 		Users user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("No User Found with ID " + id));
 		FoodOrder foodOrder = new FoodOrder();
@@ -77,7 +77,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 
 	// search the food Order based on FoodOrder Id and return the response object as
 	// FoodOrder
-	public ResponseEntity<?> searchFoodOrder(int id) {
+	public ResponseEntity<ResponseStructure<FoodOrder>> searchFoodOrder(int id) {
 		FoodOrder order = foodOrderDao.searchFoodOrder(id)
 				.orElseThrow(() -> new FoodOrderNotFoundException("Order Not Found"));
 		responseStructure.setData(order);
@@ -87,7 +87,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	}
 
 	// update the food order by getting their id and FoodOrder Object
-	public ResponseEntity<?> updateFoodOrder(int id, FoodOrder order) {
+	public ResponseEntity<ResponseStructure<FoodOrder>> updateFoodOrder(int id, FoodOrder order) {
 		responseStructure.setData(foodOrderDao.updatefoodOrder(id, order));
 		responseStructure.setMessage(HttpStatus.OK.getReasonPhrase());
 		responseStructure.setStatusCode(HttpStatus.OK.value());
@@ -98,7 +98,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 
 	// delete the food order by giving user Id and order Id.
 //	here, user id is taken to remove the Food order reference present in the Users entity.
-	public ResponseEntity<?> deleteFoodOrder(int order_id, int user_id) {
+	public ResponseEntity<ResponseStructure<String>> deleteFoodOrder(int order_id, int user_id) {
 		Users user = userRepository.findById(user_id)
 				.orElseThrow(() -> new UserNotFoundException("User with ID " + user_id + " is not found"));
 		List<FoodOrder> fos = user.getFoodOrders();
