@@ -98,16 +98,16 @@ public class FoodOrderServicesImp implements FoodOrderService {
 
 	// delete the food order by giving user Id and order Id.
 //	here, user id is taken to remove the Food order reference present in the Users entity.
-	public ResponseEntity<ResponseStructure<String>> deleteFoodOrder(int order_id, int user_id) {
-		Users user = userRepository.findById(user_id)
-				.orElseThrow(() -> new UserNotFoundException("User with ID " + user_id + " is not found"));
+	public ResponseEntity<ResponseStructure<String>> deleteFoodOrder(int orderId, int userId) {
+		Users user = userRepository.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " is not found"));
 		List<FoodOrder> fos = user.getFoodOrders();
 		FoodOrder fo = null;
 		for (FoodOrder food : fos) {
-			if (food.getId() == order_id) {
+			if (food.getId() == orderId) {
 				fo = food;
 			} else {
-				throw new FoodOrderNotFoundException("Food Order with ID " + order_id + " is not found");
+				throw new FoodOrderNotFoundException("Food Order with ID " + orderId + " is not found");
 			}
 		}
 		fos.remove(fo);
