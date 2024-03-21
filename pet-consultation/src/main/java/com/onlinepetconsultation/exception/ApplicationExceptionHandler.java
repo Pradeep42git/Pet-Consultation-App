@@ -21,6 +21,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 
+
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> userNotFoundExceptionhandler(UserNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
@@ -28,29 +29,21 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
 		responseStructure.setMessage(exception.getMessage());
-
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
+
 
 	@ExceptionHandler(ConsultantNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(ConsultantNotFoundException exception){
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		
+		responseStructure.setMessage("Product Not found ");
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
-		responseStructure.setMessage(HttpStatus.NOT_FOUND.getReasonPhrase());
-		responseStructure.setMessage(exception.getMessage());
+		responseStructure.setData(exception.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(ProductNotExistException.class)
-	public ResponseEntity<ResponseStructure<String>> catchProductNotFoundException(
-			ProductNotExistException notFoundException) {
-		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		responseStructure.setMessage("Product Not found ");
-		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
-		responseStructure.setData(notFoundException.getMessage());
-		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
-	}
+	
+	
 	
 	@ExceptionHandler(FoodOrderNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> foodOrderNotFoundException(

@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 public class UserNotFoundException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
+	private String message="Admin not present";
 	
-	private String message = "";	
-	@Override
 	public String getMessage() {
 		return message;
 	}
+	
 }

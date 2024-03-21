@@ -14,7 +14,7 @@ public interface ConsultantService {
 	/*
 	 * Performs save operation and returns Consultant created Response
 	 */
-	ResponseEntity<ResponseStructure<Consultant>> saveConsultant(ConsultantDto consultantDto, int adminId);
+	ResponseEntity<ResponseStructure<Consultant>> saveConsultant(ConsultantDto consultantDto);
 
 	/*
 	 * perform the retrive list of consultant operation for the Admin
@@ -34,16 +34,15 @@ public interface ConsultantService {
 	/*
 	 * perform the update operation for the consultant by using consultantId
 	 */
-	ResponseEntity<ResponseStructure<Consultant>> updateConsultant(ConsultantDto consultantDto, int adminId,
-			int consultantId);
+	ResponseEntity<ResponseStructure<Consultant>> updateConsultant(ConsultantDto consultantDto, int consultantId);
 
 	/*
 	 * Performs delete operations by setting field in false
 	 */
-	ResponseEntity<ResponseStructure<String>> removeConsultant(int consultantId, int adminId);
+	ResponseEntity<ResponseStructure<String>> removeConsultant(int consultantId);
 
 	/*
 	 * perform the get bookings of any consultant by consultant Id
 	 */
-	ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(int consultantId, int adminId);
+	ResponseEntity<ResponseStructure<List<Booking>>> getAllBookings(int consultantId);
 }

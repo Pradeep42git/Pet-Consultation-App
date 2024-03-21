@@ -65,7 +65,9 @@ public class Users {
 	
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
+	@JsonIgnore/*
+	 * Performs delete operations on admin based on id
+	 */
 	List<FoodOrder> foodOrders;
 	
 

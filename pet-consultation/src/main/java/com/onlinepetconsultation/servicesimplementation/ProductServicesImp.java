@@ -1,7 +1,6 @@
 package com.onlinepetconsultation.servicesimplementation;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,38 +10,29 @@ import org.springframework.stereotype.Service;
 import com.onlinepetconsultation.dao.ProductDao;
 import com.onlinepetconsultation.dto.ProductDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
-import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.entity.Product;
-import com.onlinepetconsultation.exception.AdminNotExistException;
 import com.onlinepetconsultation.exception.ProductNotExistException;
-import com.onlinepetconsultation.repository.AdminRepository;
 import com.onlinepetconsultation.services.ProductService;
 
 @Service
 public class ProductServicesImp implements ProductService {
 
-	@Autowired
-	private AdminRepository adminRepository;
+	
 	@Autowired
 	private ProductDao productDao;
 
 	/*
 	 * Performs save operation and returns Product created Response
 	 */
-	public ResponseEntity<ResponseStructure<Product>> saveProduct(ProductDto productDto, int adminId) {
+	public ResponseEntity<ResponseStructure<Product>> saveProduct(ProductDto productDto) {
 
 		Product recievedProduct = null;
-		Optional<Admin> user = adminRepository.findById(adminId);
-		if (user.isPresent()&& productDto!=null) {
-			Product product=new Product();
-			product.setName(productDto.getName());
-			product.setDescription(productDto.getDescription());
-			product.setTotalCost(productDto.getTotalCost());
-			product.setAvailable(true);
-			recievedProduct = productDao.createProduct(product);
-		} else {
-			throw new AdminNotExistException();
-		}
+		Product product = new Product();
+		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
+		product.setTotalCost(productDto.getTotalCost());
+		product.setAvailable(true);
+		recievedProduct = productDao.createProduct(product);
 
 		ResponseStructure<Product> response = new ResponseStructure<Product>();
 		response.setStatusCode(HttpStatus.CREATED.value());
@@ -84,31 +74,25 @@ public class ProductServicesImp implements ProductService {
 	/*
 	 * Performs update operation and returns the updated Product Response for Admin
 	 */
-	public ResponseEntity<ResponseStructure<Product>> updateProduct(int adminId, ProductDto updateProduct,
-			int productId) {
-		Optional<Admin> admin = adminRepository.findById(adminId);
+	public ResponseEntity<ResponseStructure<Product>> updateProduct(ProductDto updateProduct, int productId) {
 		Product product = productDao.getProductById(productId);
 		Product recievedProduct = null;
-		if (admin.isPresent()) {
-			if (updateProduct != null && product != null) {
-				if (updateProduct.getName() != null) {
-					product.setName(updateProduct.getName());
-				}
-				if (updateProduct.getDescription() != null) {
-					product.setDescription(updateProduct.getDescription());
-				}
-				if (updateProduct.getTotalCost() != 0) {
-					product.setTotalCost(updateProduct.getTotalCost());
-				}
-				if (updateProduct.isAvailable() == true) {
-					product.setAvailable(updateProduct.isAvailable());
-				}
-				recievedProduct = productDao.createProduct(product);
-			}else {
-				throw new ProductNotExistException();
+		if (updateProduct != null && product != null) {
+			if (updateProduct.getName() != null) {
+				product.setName(updateProduct.getName());
 			}
+			if (updateProduct.getDescription() != null) {
+				product.setDescription(updateProduct.getDescription());
+			}
+			if (updateProduct.getTotalCost() != 0) {
+				product.setTotalCost(updateProduct.getTotalCost());
+			}
+			if (updateProduct.isAvailable() == true) {
+				product.setAvailable(updateProduct.isAvailable());
+			}
+			recievedProduct = productDao.createProduct(product);
 		} else {
-			throw new AdminNotExistException();
+			throw new ProductNotExistException();
 		}
 		ResponseStructure<Product> response = new ResponseStructure<Product>();
 		response.setStatusCode(HttpStatus.OK.value());
@@ -121,10 +105,8 @@ public class ProductServicesImp implements ProductService {
 	/*
 	 * Performs delete operations by setting field in false
 	 */
-	public ResponseEntity<ResponseStructure<String>> deleteProduct(int adminId, int productId) {
+	public ResponseEntity<ResponseStructure<String>> deleteProduct(int productId) {
 
-		Optional<Admin> admin = adminRepository.findById(adminId);
-		if (admin.isPresent()) {
 			Product product = productDao.getProductById(productId);
 			if (product != null) {
 				product.setAvailable(false);
@@ -133,9 +115,6 @@ public class ProductServicesImp implements ProductService {
 				throw new ProductNotExistException();
 			}
 
-		} else {
-			throw new AdminNotExistException();
-		}
 		ResponseStructure<String> response = new ResponseStructure<String>();
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setMessage("Success");
