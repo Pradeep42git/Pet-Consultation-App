@@ -3,7 +3,9 @@ package com.onlinepetconsultation.services;
 import org.springframework.http.ResponseEntity;
 
 import com.onlinepetconsultation.dto.AdminDto;
+import com.onlinepetconsultation.dto.JWTResponse;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.entity.Admin;
 
 public interface AdminService {
@@ -34,4 +36,9 @@ public interface AdminService {
 	 */
 	ResponseEntity<ResponseStructure<Admin>> updateAdmin(AdminDto adminDto, int adminId);
 
+	/*
+	 * Performs Login operation for Admin
+	 */
+	ResponseEntity<ResponseStructure<JWTResponse>> adminLogin(SignInRequest request);
+	
 }

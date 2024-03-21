@@ -28,7 +28,7 @@ public class BookingServiceController {
 	@Autowired
 	private BookingService bookingService;
 	
-	@PostMapping("{user_id}/food")
+	@PostMapping("{user_id}/save_food")
 	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto,@PathVariable int user_id) throws Exception{
 		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
@@ -53,7 +53,7 @@ public class BookingServiceController {
 		return bookingService.bookingOrderConsultant(userId, consultantId);
 	}
 	
-	@GetMapping("get/{bookingId}")
+	@GetMapping("/search/{bookingId}")
 	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(@PathVariable int bookingId){
 		return bookingService.searchBookingOrder(bookingId);
 	}

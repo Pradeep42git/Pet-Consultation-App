@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlinepetconsultation.dto.JWTResponse;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.dto.UsersDto;
 import com.onlinepetconsultation.entity.Consultant;
 import com.onlinepetconsultation.entity.Product;
@@ -85,6 +87,11 @@ public class UserController {
 	@GetMapping("/get-all-user")
 	public ResponseEntity<ResponseStructure<List<Users>>> getUsers() {
 		return userService.getAllUsers();
+	}
+	
+	@PostMapping("/user-login")
+	public ResponseEntity<ResponseStructure<JWTResponse>> userLogin(@RequestBody SignInRequest request){
+		return userService.userLogin(request);
 	}
 
 }
