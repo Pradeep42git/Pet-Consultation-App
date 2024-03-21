@@ -3,15 +3,26 @@ package com.onlinepetconsultation.servicesimplementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.onlinepetconsultation.dao.UserDao;
+import com.onlinepetconsultation.dto.JWTResponse;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.dto.UsersDto;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.exception.UserNotFoundException;
+import com.onlinepetconsultation.services.JWTService;
 import com.onlinepetconsultation.services.UserService;
 
 @Service
@@ -19,6 +30,17 @@ public class UserServicesImp implements UserService {
 
 	@Autowired
 	private UserDao usersDao;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	@Qualifier("userManger")
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	@Qualifier("userdetailservices")
+	private UserDetailsService detailsService;
+	@Autowired
+	private JWTService jwtService;
 
 	/*
 	 * Performs save operation and returns user save Response
@@ -29,7 +51,7 @@ public class UserServicesImp implements UserService {
 		Users user = new Users();
 		user.setUserName(usersDto.getUserName());
 		user.setUserEmail(usersDto.getUserEmail());
-		user.setUserPassword(usersDto.getUserPassword());
+		user.setPassword(passwordEncoder.encode(usersDto.getUserPassword()));
 		user.setUserPhone(usersDto.getUserPhone());
 		user.setUserAddress(usersDto.getUserAddress());
 
@@ -109,7 +131,7 @@ public class UserServicesImp implements UserService {
 				user.setUserEmail(usersDto.getUserEmail());
 			}
 			if (usersDto.getUserPassword() != null) {
-				user.setUserPassword(usersDto.getUserPassword());
+				user.setPassword(passwordEncoder.encode(usersDto.getUserPassword()));
 			}
 			if (usersDto.getUserPhone() != 0) {
 				user.setUserPhone(usersDto.getUserPhone());
@@ -145,4 +167,31 @@ public class UserServicesImp implements UserService {
 		return new ResponseEntity<ResponseStructure<List<Users>>>(response, HttpStatus.OK);
 	}
 
+	/*
+	 * Performs Login operation for User
+	 */
+	public ResponseEntity<ResponseStructure<JWTResponse>> userLogin(SignInRequest request) {
+		doAuthenticate(request.getEmail(), request.getPassword());
+		UserDetails userDetails = detailsService.loadUserByUsername(request.getEmail());
+		System.err.println(userDetails);
+		String token = this.jwtService.generateToken(userDetails);
+		JWTResponse jwtResponse = JWTResponse.builder().jwtToken(token).userName(userDetails.getUsername()).build();
+		ResponseStructure<JWTResponse> responseStructure = new ResponseStructure<JWTResponse>();
+		responseStructure.setStatusCode(HttpStatus.OK.value());
+		responseStructure.setMessage("Login Successfully " + userDetails.getUsername());
+		responseStructure.setData(jwtResponse);
+		return new ResponseEntity<ResponseStructure<JWTResponse>>(responseStructure, HttpStatus.OK);
+	}
+
+	private void doAuthenticate(String email, String password) {
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
+				password);
+		System.err.println(authenticationToken);
+		try {
+			Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+			System.out.println(authenticate);
+		} catch (BadCredentialsException e) {
+			throw new BadCredentialsException("Invalid Username or Password ..!!");
+		}
+	}
 }

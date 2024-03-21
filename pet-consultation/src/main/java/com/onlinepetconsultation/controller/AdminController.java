@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.onlinepetconsultation.dto.AdminDto;
 import com.onlinepetconsultation.dto.ConsultantDto;
+import com.onlinepetconsultation.dto.JWTResponse;
 import com.onlinepetconsultation.dto.ProductDto;
 import com.onlinepetconsultation.dto.ResponseStructure;
+import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.entity.Booking;
 import com.onlinepetconsultation.entity.Consultant;
@@ -177,4 +179,11 @@ public class AdminController {
 		return adminService.updateAdmin(adminDto, adminId);
 
 	}
+	
+	@PostMapping("/admin-login")
+	public ResponseEntity<ResponseStructure<JWTResponse>> adminLogin(@RequestBody SignInRequest request){
+		return adminService.adminLogin(request);
+	}
+	
+	
 }

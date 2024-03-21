@@ -1,14 +1,17 @@
 package com.onlinepetconsultation.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Food_ProductDtoRequest {
-	
-	private String name;
-	
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class JWTResponse {
+
+	
+	private String jwtToken;
+	private String userName;
 }

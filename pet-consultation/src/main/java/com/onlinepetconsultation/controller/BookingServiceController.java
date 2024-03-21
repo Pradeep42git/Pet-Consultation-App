@@ -22,6 +22,11 @@ import com.onlinepetconsultation.servicesimplementation.FoodOrderServicesImp;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 
+/*
+ * this controller class deals with CRUD operations related to consultant booking 
+ * and Food ordering. 
+ */
+
 @RestController
 @RequestMapping("/opc/bs")
 public class BookingServiceController {
@@ -31,38 +36,54 @@ public class BookingServiceController {
 	private BookingService bookingService;
 
 	@PostMapping("{user_id}/food")
-	public ResponseEntity<?> saveFoodOrders(@Valid @RequestBody FoodOrderDto dto, BindingResult result, @PathVariable int user_id) {
-		
-		if(result.hasErrors()) {
+	public ResponseEntity<?> saveFoodOrders(@Valid @RequestBody FoodOrderDto dto, BindingResult result,
+			@PathVariable int user_id) {
+
+		if (result.hasErrors()) {
 			String message = "";
-			for(FieldError err : result.getFieldErrors()) {
+			for (FieldError err : result.getFieldErrors()) {
 				message += err.getDefaultMessage();
 			}
 			throw new ValidationException(message);
 		}
-		
+
 		return foodOrderServices.saveFoodOrder(dto, user_id);
 	}
 
+	// save the food order and generate a bill based on product cost and create a
+	// response object as FoodOrder
+	// to a specific user
+	@PostMapping("{user_id}/food")
+	public ResponseEntity<?> saveFoodOrders(@RequestBody FoodOrderDto dto, @PathVariable int user_id) {
+		return foodOrderServices.saveFoodOrder(dto, user_id);
+	}
+
+	// search the food Order based on FoodOrder Id and return the response object as
+	// FoodOrder
 	@GetMapping("/search/{order_id}")
 	public ResponseEntity<?> searchFoodOrder(@PathVariable int order_id) {
 		return foodOrderServices.searchFoodOrder(order_id);
 	}
 
+	// update the food order by getting their id and FoodOrder Object
 	@PutMapping("/update/{order_id}")
-	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @Valid @RequestBody FoodOrder order, BindingResult result) {
-		
-		if(result.hasErrors()) {
+	public ResponseEntity<?> updateFoodOrder(@PathVariable int order_id, @Valid @RequestBody FoodOrder order,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
 			String message = "";
-			for(FieldError err : result.getFieldErrors()) {
+			for (FieldError err : result.getFieldErrors()) {
 				message += err.getDefaultMessage();
 			}
 			throw new ValidationException(message);
 		}
-		
+
 		return foodOrderServices.updateFoodOrder(order_id, order);
 	}
 
+	// delete the food order by giving user Id and order Id.
+	// here, user id is taken to remove the Food order reference present in the
+	// Users entity.
 	@DeleteMapping("{user_id}/delete_food/{order_id}")
 	public ResponseEntity<?> deleteFoodOrder(@PathVariable int order_id, @PathVariable int user_id) {
 		return foodOrderServices.deleteFoodOrder(order_id, user_id);
