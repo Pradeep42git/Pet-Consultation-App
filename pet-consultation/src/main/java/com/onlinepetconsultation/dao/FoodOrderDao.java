@@ -16,10 +16,12 @@ public class FoodOrderDao {
 	@Autowired
 	private FoodOrderRepository foodOrderRepository;
 	
+
 	public FoodOrder saveFoodOrder(FoodOrder food) {
 		return foodOrderRepository.save(food);
 	}
 	
+
 	public Optional<FoodOrder> searchFoodOrder(int id) {
 		return foodOrderRepository.findById(id);
 	}
@@ -35,10 +37,10 @@ public class FoodOrderDao {
 	}
 	
 	public String deleteFoodOrder(int id) {
-		FoodOrder foodOrder = searchFoodOrder(id).orElseThrow(()-> new FoodOrderNotFoundException("No Order Found"));
+		FoodOrder foodOrder = searchFoodOrder(id).orElseThrow(()-> new FoodOrderNotFoundException("No Order Found with ID "+id));
 		foodOrder.setProducts(null);
 		foodOrderRepository.delete(foodOrder);
-		return "Order deleted Sucessfully";
+		return "Order with ID "+id+"deleted Sucessfully";
 		
 	}
 	
