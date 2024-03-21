@@ -28,7 +28,7 @@ import com.onlinepetconsultation.services.ConsultantService;
 import com.onlinepetconsultation.services.ProductService;
 
 @RestController
-@RequestMapping("/opc/admin")
+@RequestMapping("/onlinepetconsultantion/admins")
 public class AdminController {
 
 	@Autowired

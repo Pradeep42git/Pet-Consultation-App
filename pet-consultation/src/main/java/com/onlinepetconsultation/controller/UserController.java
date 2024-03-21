@@ -26,7 +26,7 @@ import com.onlinepetconsultation.services.ProductService;
 import com.onlinepetconsultation.services.UserService;
 
 @RestController
-@RequestMapping("/opc/user")
+@RequestMapping("/onlinepetconsultantion/users")
 public class UserController {
 
 	@Autowired
