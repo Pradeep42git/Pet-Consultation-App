@@ -2,6 +2,7 @@ package com.onlinepetconsultation.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -50,6 +51,16 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 			FoodOrderNotFoundException notFoundException) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setMessage("Food Order Not found ");
+		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		responseStructure.setData(notFoundException.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ResponseStructure<String>> catchBadCredentialsException(
+			BadCredentialsException notFoundException) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setMessage("BadCredentialsException ");
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		responseStructure.setData(notFoundException.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
