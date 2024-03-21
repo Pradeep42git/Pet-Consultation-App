@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -34,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -57,9 +59,9 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(request -> request.requestMatchers(AUTH_WHITELIST).permitAll()
-						.requestMatchers("/opc/user/save-user","/opc/user/user-login","/opc/admin/admin-login").permitAll()
-						.requestMatchers("/opc/user/**", "/opc/bs/**").hasAnyAuthority(Roles.USER.name())
-						.requestMatchers("/opc/admin/**", "/opc/bs/search/**").hasAnyAuthority(Roles.ADMIN.name())
+						.requestMatchers("/onlinepetconsultantion/users","/onlinepetconsultantion/users/login","/onlinepetconsultantion/admins/login").permitAll()
+						.requestMatchers("/onlinepetconsultantion/users/**", "/opc/bs/**").authenticated()
+						.requestMatchers( "/onlinepetconsultantion/admins/**","/opc/bs/search/**").hasAnyAuthority(Roles.ADMIN.name())
 						.anyRequest().authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
 				.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
