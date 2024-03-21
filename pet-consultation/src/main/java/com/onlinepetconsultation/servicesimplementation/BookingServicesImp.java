@@ -17,6 +17,7 @@ public class BookingServicesImp implements BookingService {
 	@Autowired
 	private BookingDao bookingDao;
 
+	//used to create a booking order and returns Booking response
 	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(int userId, int consultantId) {
 
 		Booking booking = bookingDao.bookingOrderConsultant(userId, consultantId);
@@ -39,6 +40,7 @@ public class BookingServicesImp implements BookingService {
 		
 	}
 
+	//used to search a booking order and returns Booking response
 	public ResponseEntity<ResponseStructure<BookingResponse>> searchBookingOrder(int bookingId) {
 
 		Booking booking = bookingDao.searchBookingOrder(bookingId);
@@ -61,6 +63,7 @@ public class BookingServicesImp implements BookingService {
 
 	}
 
+	//used to delete a booking order and returns String response
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(int bookingId) {
 
 		String del_status = bookingDao.deleteBookingOrder(bookingId);

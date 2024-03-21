@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,9 @@ import com.onlinepetconsultation.services.AdminService;
 import com.onlinepetconsultation.services.ConsultantService;
 import com.onlinepetconsultation.services.ProductService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+
 @RestController
 @RequestMapping("/onlinepetconsultantion/admins")
 public class AdminController {
@@ -41,7 +46,17 @@ public class AdminController {
 	private ConsultantService consultantService;
 
 	@PostMapping("/save-product")
-	public ResponseEntity<ResponseStructure<Product>> saveProduct(@RequestBody ProductDto productDto) {
+	public ResponseEntity<ResponseStructure<Product>> saveProduct(@Valid @RequestBody ProductDto productDto,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+
 		return productService.saveProduct(productDto);
 	}
 
@@ -51,8 +66,17 @@ public class AdminController {
 	}
 
 	@PutMapping("/update-product/{productId}")
-	public ResponseEntity<ResponseStructure<Product>> updateProduct(@RequestBody ProductDto updateProduct,
-			@PathVariable int productId) {
+	public ResponseEntity<ResponseStructure<Product>> updateProduct(@Valid @RequestBody ProductDto updateProduct,
+			BindingResult result, @PathVariable int productId) {
+
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+
 		return productService.updateProduct(updateProduct, productId);
 	}
 
@@ -62,7 +86,17 @@ public class AdminController {
 	}
 
 	@PostMapping("/save-consultant")
-	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(@RequestBody ConsultantDto consultantDto) {
+	public ResponseEntity<ResponseStructure<Consultant>> saveConsultant(@Valid @RequestBody ConsultantDto consultantDto,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+
 		return consultantService.saveConsultant(consultantDto);
 	}
 
@@ -72,8 +106,17 @@ public class AdminController {
 	}
 
 	@PutMapping("/update-consultant/{consultantId}")
-	public ResponseEntity<ResponseStructure<Consultant>> updateConsultant(@RequestBody ConsultantDto consultantDto,
-			@PathVariable int consultantId) {
+	public ResponseEntity<ResponseStructure<Consultant>> updateConsultant(
+			@Valid @RequestBody ConsultantDto consultantDto, BindingResult result, @PathVariable int consultantId) {
+
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+
 		return consultantService.updateConsultant(consultantDto, consultantId);
 	}
 
@@ -88,7 +131,17 @@ public class AdminController {
 	}
 
 	@PostMapping("/save-admin")
-	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@RequestBody AdminDto adminDto) {
+	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@Valid @RequestBody AdminDto adminDto,
+			BindingResult result) {
+		
+		if(result.hasErrors()) {
+			String message = "";
+			for(FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+		
 		return adminService.saveAdmin(adminDto);
 
 	}
@@ -112,8 +165,17 @@ public class AdminController {
 	}
 
 	@PutMapping("/update-admin/{adminId}")
-	public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@RequestBody AdminDto adminDto,
-			@PathVariable int adminId) {
+	public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@Valid @RequestBody AdminDto adminDto,
+			BindingResult result, @PathVariable int adminId) {
+
+		if (result.hasErrors()) {
+			String message = "";
+			for (FieldError err : result.getFieldErrors()) {
+				message += err.getDefaultMessage();
+			}
+			throw new ValidationException(message);
+		}
+
 		return adminService.updateAdmin(adminDto, adminId);
 
 	}
