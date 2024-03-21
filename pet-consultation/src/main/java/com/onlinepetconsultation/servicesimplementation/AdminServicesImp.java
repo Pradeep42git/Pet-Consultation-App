@@ -139,10 +139,10 @@ public class AdminServicesImp implements AdminService {
 		}
 
 		ResponseStructure<Admin> responseStructure = new ResponseStructure<Admin>();
-		responseStructure.setStatusCode(HttpStatus.CREATED.value());
+		responseStructure.setStatusCode(HttpStatus.OK.value());
 		responseStructure.setMessage(" Admin updated succesfully");
 		responseStructure.setData(receivedAdmin);
-		return new ResponseEntity<ResponseStructure<Admin>>(responseStructure, HttpStatus.CREATED);
+		return new ResponseEntity<ResponseStructure<Admin>>(responseStructure, HttpStatus.OK);
 
 	}
 	/*

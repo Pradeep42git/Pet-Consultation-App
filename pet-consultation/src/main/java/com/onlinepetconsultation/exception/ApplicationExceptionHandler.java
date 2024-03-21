@@ -9,6 +9,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.onlinepetconsultation.dto.ResponseStructure;
 
+import jakarta.validation.ValidationException;
+
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -22,7 +24,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 
-
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> userNotFoundExceptionhandler(UserNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
@@ -33,9 +34,9 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 
-
 	@ExceptionHandler(ConsultantNotFoundException.class)
-	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(ConsultantNotFoundException exception){
+	public ResponseEntity<ResponseStructure<String>> consultantNotFoundExceptionhandler(
+			ConsultantNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setMessage("Product Not found ");
 		responseStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
@@ -43,9 +44,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 
-	
-	
-	
 	@ExceptionHandler(FoodOrderNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> foodOrderNotFoundException(
 			FoodOrderNotFoundException notFoundException) {
@@ -55,7 +53,17 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		responseStructure.setData(notFoundException.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
-	
+
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<ResponseStructure<String>> validationExceptionHandler(ValidationException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setMessage(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+		responseStructure.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_ACCEPTABLE);
+
+	}
+
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<ResponseStructure<String>> catchBadCredentialsException(
 			BadCredentialsException notFoundException) {
