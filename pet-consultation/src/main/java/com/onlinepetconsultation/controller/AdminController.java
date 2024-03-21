@@ -20,6 +20,9 @@ import com.onlinepetconsultation.dto.SignInRequest;
 import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.services.AdminService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 
@@ -30,7 +33,8 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-
+	@ApiResponse(description = "User saved as a Admin",responseCode = "201" )
+	@Operation(summary = "To save User as Admin", description = "To save User as Admin")
 	@PostMapping
 	public ResponseEntity<ResponseStructure<Admin>> saveAdmin(@Valid @RequestBody AdminDto adminDto,
 			BindingResult result) {
@@ -47,24 +51,31 @@ public class AdminController {
 
 	}
 
+	@ApiResponse(description = "Admin found",responseCode = "200" )
+	@Operation(summary = "To find Admin details by ID", description ="To find Admin details based on ID")
 	@GetMapping("/getAdminId/{adminId}")
 	public ResponseEntity<ResponseStructure<Admin>> getAdminById(@PathVariable int adminId) {
 		return adminService.getById(adminId);
 
 	}
 
+	@ApiResponse(description = "Admin found",responseCode = "200" )
+	@Operation(summary = "To find Admin details by Name", description ="To find Admin details based on their Name")
 	@GetMapping("/getAdminName/{adminName}")
 	public ResponseEntity<ResponseStructure<Admin>> getAdminByName(@PathVariable String adminName) {
 		return adminService.getByName(adminName);
 
 	}
-
+	@ApiResponse(description = "Admin deleted",responseCode = "200" )
+	@Operation(summary = "To delete Admin details by ID", description ="To delete Admin details based on ID")
 	@DeleteMapping("/{adminId}")
 	public ResponseEntity<ResponseStructure<String>> deleteAdmin(@PathVariable int adminId) {
 		return adminService.deleteAdmin(adminId);
 
 	}
 
+	@ApiResponse(description = "Admin updated",responseCode = "200" )
+	@Operation(summary = "To update Admin details by ID", description ="To update Admin details based on ID")
 	@PutMapping("/{adminId}")
 	public ResponseEntity<ResponseStructure<Admin>> updateAdmin(@Valid @RequestBody AdminDto adminDto,
 			BindingResult result, @PathVariable int adminId) {
