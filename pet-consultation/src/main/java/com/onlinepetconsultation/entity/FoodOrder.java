@@ -3,11 +3,10 @@ package com.onlinepetconsultation.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,12 +31,12 @@ public class FoodOrder {
 
 	private LocalDateTime foodorderDateTime;
 	
-	private boolean orderStatus;
+	private boolean orderStatus=true;
 
 	@Positive
 	private double cost;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE },fetch = FetchType.EAGER)
 	private List<Product> products;
 	
 

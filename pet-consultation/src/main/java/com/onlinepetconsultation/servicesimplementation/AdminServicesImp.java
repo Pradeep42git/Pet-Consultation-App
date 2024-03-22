@@ -31,7 +31,7 @@ public class AdminServicesImp implements AdminService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
-	@Qualifier("adminManger")
+	@Qualifier("adminManager")
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	@Qualifier("admindetailservices")
@@ -166,16 +166,13 @@ public class AdminServicesImp implements AdminService {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
 				password);
 		System.err.println(authenticationToken);
-		if (authenticationToken.isAuthenticated()) {
+		
 			try {
 				Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 				System.err.println(authenticate);
 			} catch (BadCredentialsException e) {
 				throw new BadCredentialsException("Invalid Username or Password ..!!");
 			}
-		} else {
-			throw new BadCredentialsException("Invalid Username or Password ..!!");
-		}
 	}
 
 }

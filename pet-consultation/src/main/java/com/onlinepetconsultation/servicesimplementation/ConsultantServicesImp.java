@@ -84,10 +84,10 @@ public class ConsultantServicesImp implements ConsultantService {
 
 		List<Consultant> consultant = consultantDao.getAllConsultantForUsers();
 		ResponseStructure<List<Consultant>> response = new ResponseStructure<List<Consultant>>();
-		response.setStatusCode(HttpStatus.CREATED.value());
+		response.setStatusCode(HttpStatus.OK.value());
 		response.setMessage("Success");
 		response.setData(consultant);
-		return new ResponseEntity<ResponseStructure<List<Consultant>>>(response, HttpStatus.CREATED);
+		return new ResponseEntity<ResponseStructure<List<Consultant>>>(response, HttpStatus.OK);
 	}
 
 	/*

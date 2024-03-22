@@ -75,6 +75,7 @@ public class UserController {
 
 	}
 
+
 	@ApiResponse(description = "User updated",responseCode = "200" )
 	@Operation(summary = "To update details of a user by ID", description = "To update details of a user by ID")
 	@PutMapping("/{userId}")

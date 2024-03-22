@@ -22,6 +22,7 @@ public class ApplicationConfiguration {
 		localhost.setDescription("Development environment");
 
 		Contact contact = new Contact();
+
 		contact.setEmail("info@petconsultationapp.in");
 		contact.setName("pet Consultation App");
 		contact.setUrl("https://foodapp.in");
