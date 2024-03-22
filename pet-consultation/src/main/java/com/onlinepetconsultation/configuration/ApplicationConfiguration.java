@@ -22,13 +22,13 @@ public class ApplicationConfiguration {
 		localhost.setDescription("Development environment");
 
 		Contact contact = new Contact();
-		contact.setEmail("info@petconsultationapp.in");
-		contact.setName("petconsultationapp");
-		contact.setUrl("https://foodapp.in");
+		contact.setEmail("info@onlinepetconsultationapp.in");
+		contact.setName("onlinepetconsultationapp");
+		contact.setUrl("https://onlinepetconsultationapp.in");
 
 		License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
-		Info info = new Info().title("petconsultationapp RESTful Web Service documentation").version("1.0").contact(contact).description("This API exposes endpoints to manage petconsultationapp.").termsOfService("https://foodapp/terms").license(mitLicense);
+		Info info = new Info().title("onlinepetconsultationapp RESTful Web Service documentation").version("1.0").contact(contact).description("This API exposes endpoints to manage onlinepetconsultationapp.").termsOfService("https://onlinepetconsultationapp/terms").license(mitLicense);
 
 		return new OpenAPI().info(info).servers(List.of(localhost));
 	}

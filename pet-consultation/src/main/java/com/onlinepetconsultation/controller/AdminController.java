@@ -21,7 +21,6 @@ import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.services.AdminService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;

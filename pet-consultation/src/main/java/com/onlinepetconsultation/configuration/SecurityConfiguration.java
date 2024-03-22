@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,11 +34,8 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-
-//	private final JwtAuthenticationFilter authenticationFilter;
 
 	@Autowired
 	private JWTAuthenticationEntryPoint authenticationEntryPoint;
@@ -59,9 +55,9 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(request -> request.requestMatchers(AUTH_WHITELIST).permitAll()
-						.requestMatchers("/onlinepetconsultantion/users","/onlinepetconsultantion/users/login","/onlinepetconsultantion/admins/login").permitAll()
-						.requestMatchers("/onlinepetconsultantion/users/**", "/opc/bs/**").authenticated()
-						.requestMatchers( "/onlinepetconsultantion/admins/**","/opc/bs/search/**").hasAnyAuthority(Roles.ADMIN.name())
+						.requestMatchers("/onlinepetconsultantion/admins/login","/onlinepetconsultantion/users/login","/onlinepetconsultantion/users").permitAll()
+						.requestMatchers("/onlinepetconsultantion/admins/**","/onlinepetconsultantion/users/admins/**","/onlinepetconsultantion/consultants/admins/**","/onlinepetconsultantion/products/admins/**").hasAnyAuthority(Roles.ADMIN.name())
+						.requestMatchers("/onlinepetconsultantion/users/**","/onlinepetconsultantion/consultants/users/**","/onlinepetconsultantion/products/users/products","/onlinepetconsultantion/bookingservices/**").hasAnyAuthority(Roles.USER.name())
 						.anyRequest().authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
 				.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -86,7 +82,14 @@ public class SecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean(name = "adminManger")
+	@Bean(name = "userManager")
+	@Primary
+	public AuthenticationManager userAuthenticationManager(CustomUserDetailService customUserDetailService,
+			PasswordEncoder encoder) {
+		return authenticationManager(customUserDetailService, encoder);
+	}
+	
+	@Bean(name = "adminManager")
 	public AuthenticationManager adminAuthenticationManager(CustomAdminDetailService adminDetailService,
 			PasswordEncoder encoder) {
 		return authenticationManager(adminDetailService, encoder);
@@ -98,11 +101,6 @@ public class SecurityConfiguration {
 		return new ProviderManager(authenticationProviders);
 	}
 
-	@Primary
-	@Bean(name = "userManger")
-	public AuthenticationManager userAuthenticationManager(CustomUserDetailService customUserDetailService,
-			PasswordEncoder encoder) {
-		return authenticationManager(customUserDetailService, encoder);
-	}
+	
 
 }

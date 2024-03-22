@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onlinepetconsultation.dto.ConsultantDto;
@@ -77,9 +76,9 @@ public class ConsultantController {
 		return consultantService.removeConsultant(consultantId);
 	}
 
-	@GetMapping("/users/getConsultantDesignation")
+	@GetMapping("/users/getConsultantDesignation/{designation}")
 	public ResponseEntity<ResponseStructure<List<Consultant>>> getConsultantByDesignation(
-			@RequestParam String designation) {
+			@PathVariable	 String designation) {
 		return consultantService.getConsultantsByDesignation(designation);
 	}
 
