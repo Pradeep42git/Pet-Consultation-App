@@ -12,14 +12,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class Booking {
 
 	@Id
@@ -39,4 +37,9 @@ public class Booking {
 	@ManyToOne
 	@JoinColumn
 	private Consultant consultant;
+
+	@Override
+	public String toString() {
+		return "Booking [Id=" + Id + ", bookingDateTime=" + bookingDateTime + " ]";
+	}
 }

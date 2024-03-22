@@ -72,7 +72,7 @@ public class BookingServiceController {
 	@ApiResponse(description = "Food order updated",responseCode = "200" )
 	@Operation(summary = "To update a food order ", description = "Update a food order by giving order ID")
 	@PutMapping("/update/{orderId}")
-	public ResponseEntity<ResponseStructure<FoodOrder>> updateFoodOrder(@PathVariable int orderId, @Valid @RequestBody FoodOrder order,
+	public ResponseEntity<ResponseStructure<FoodOrder>> updateFoodOrder(@PathVariable int orderId, @Valid @RequestBody FoodOrderDto order,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -91,13 +91,13 @@ public class BookingServiceController {
 	// Users entity.
 	@ApiResponse(description = "Food order deleted",responseCode = "200" )
 	@Operation(summary = "To delete a food order ", description = "Delete a food order by giving user ID and order ID")
-	@DeleteMapping("{userId}/delete_food/{orderId}")
+	@DeleteMapping("{userId}/deleteFood/{orderId}")
 	public ResponseEntity<ResponseStructure<String>> deleteFoodOrder(@PathVariable int orderId, @PathVariable int userId) {
 		return foodOrderServices.deleteFoodOrder(orderId, userId);
 	}
 	
 	@ApiResponse(description = "Consulatant booked",responseCode = "201" )
-	@Operation(summary = "To book a consultant ", description = "Book a consultant by a specific user")
+	@Operation(summary = "To book a consultant by user ", description = "Book a consultant by a specific user")
 	@PostMapping("/{userId}/{consultantId}")
 	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId,
 			@PathVariable int consultantId) {
@@ -112,7 +112,7 @@ public class BookingServiceController {
 	}
 	@ApiResponse(description = "Consultant booking order deleted",responseCode = "200" )
 	@Operation(summary = "To delete a consultant booking order", description = "Delete a consulatant booking order by giving order ID")
-	@DeleteMapping("delete_booking/{bookingId}")
+	@DeleteMapping("deleteBooking/{bookingId}")
 	public ResponseEntity<ResponseStructure<String>> deleteBookingOrder(@PathVariable int bookingId) {
 		return bookingService.deleteBookingOrder(bookingId);
 	}

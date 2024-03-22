@@ -48,7 +48,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 		Users user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("No User Found with ID " + id));
 		FoodOrder foodOrder = new FoodOrder();
-		foodOrder.setOrderStatus(food.isOrderStatus());
+		foodOrder.setOrderStatus(true);
 		foodOrder.setFoodorderDateTime(LocalDateTime.now());
 		double foodBill = 0;
 		List<Product> products = new ArrayList<Product>();
@@ -87,7 +87,7 @@ public class FoodOrderServicesImp implements FoodOrderService {
 	}
 
 	// update the food order by getting their id and FoodOrder Object
-	public ResponseEntity<ResponseStructure<FoodOrder>> updateFoodOrder(int id, FoodOrder order) {
+	public ResponseEntity<ResponseStructure<FoodOrder>> updateFoodOrder(int id, FoodOrderDto order) {
 		responseStructure.setData(foodOrderDao.updatefoodOrder(id, order));
 		responseStructure.setMessage(HttpStatus.OK.getReasonPhrase());
 		responseStructure.setStatusCode(HttpStatus.OK.value());

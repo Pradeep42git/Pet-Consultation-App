@@ -30,7 +30,7 @@ public class PetConsultationApplication implements CommandLineRunner {
 		SpringApplication.run(PetConsultationApplication.class, args);
 	}
 
-	@Override
+	@Override 
 	public void run(String... args) throws Exception {
 		if (adminRepository.count() == 0) {
 			Admin admin = new Admin();

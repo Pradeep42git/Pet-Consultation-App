@@ -91,6 +91,8 @@ public class AdminController {
 
 	}
 	
+	@ApiResponse(description = "Login Success",responseCode = "200" )
+	@Operation(summary = "To Login as Admin", description = "To Login as Admin")
 	@PostMapping("/login")
 	public ResponseEntity<ResponseStructure<JWTResponse>> adminLogin(@RequestBody SignInRequest request){
 		return adminService.adminLogin(request);
