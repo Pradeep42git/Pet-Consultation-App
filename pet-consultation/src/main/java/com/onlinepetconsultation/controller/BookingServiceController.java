@@ -97,7 +97,7 @@ public class BookingServiceController {
 	}
 	
 	@ApiResponse(description = "Consulatant booked",responseCode = "201" )
-	@Operation(summary = "To book a consultant ", description = "Book a consultant by a specific user")
+	@Operation(summary = "To book a consultant by user ", description = "Book a consultant by a specific user")
 	@PostMapping("/{userId}/{consultantId}")
 	public ResponseEntity<ResponseStructure<BookingResponse>> bookingOrderConsultant(@PathVariable int userId,
 			@PathVariable int consultantId) {

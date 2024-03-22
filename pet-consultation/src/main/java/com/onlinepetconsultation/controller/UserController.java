@@ -22,6 +22,8 @@ import com.onlinepetconsultation.dto.UsersDto;
 import com.onlinepetconsultation.entity.Users;
 import com.onlinepetconsultation.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 
@@ -32,6 +34,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@ApiResponse(description = "User saved",responseCode = "201" )
+	@Operation(summary = "To save a user", description = "To save a user")
 	@PostMapping
 	public ResponseEntity<ResponseStructure<Users>> saveUser(@Valid @RequestBody UsersDto usersDto,
 			BindingResult result) {
@@ -48,24 +52,31 @@ public class UserController {
 
 	}
 
+	@ApiResponse(description = "User found",responseCode = "200" )
+	@Operation(summary = "To get details of a user by ID", description = "To get details of a user by ID")
 	@GetMapping("/admins/getUserById/{userId}")
 	public ResponseEntity<ResponseStructure<Users>> getUserById(@PathVariable int userId) {
 		return userService.getUserById(userId);
 
 	}
-
+	
+	@ApiResponse(description = "User found",responseCode = "200" )
+	@Operation(summary = "To get details of a user by user name", description = "To get details of a user by user name")
 	@GetMapping("/admins/getUserByName/{userName}")
 	public ResponseEntity<ResponseStructure<Users>> getUserByName(@PathVariable String userName) {
 		return userService.getUserByName(userName);
-
 	}
 
+	@ApiResponse(description = "User deleted",responseCode = "200" )
+	@Operation(summary = "To delete details of a user by ID", description = "To delete details of a user by ID")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<ResponseStructure<String>> deleteUser(@PathVariable int userId) {
 		return userService.deleteUser(userId);
 
 	}
 
+	@ApiResponse(description = "User updated",responseCode = "200" )
+	@Operation(summary = "To update details of a user by ID", description = "To update details of a user by ID")
 	@PutMapping("/{userId}")
 	public ResponseEntity<ResponseStructure<Users>> updateUser(@Valid @RequestBody UsersDto usersDto,
 			BindingResult result, @PathVariable int userId) {
@@ -82,11 +93,15 @@ public class UserController {
 
 	}
 
+	@ApiResponse(description = "User List",responseCode = "200" )
+	@Operation(summary = "To get all users", description = "To get all users present in DB as list")
 	@GetMapping("/admins/getAllUsers")
 	public ResponseEntity<ResponseStructure<List<Users>>> getUsers() {
 		return userService.getAllUsers();
 	}
 
+	@ApiResponse(description = "Login Success",responseCode = "200" )
+	@Operation(summary = "To Login as User", description = "To Login as User")
 	@PostMapping("/login")
 	public ResponseEntity<ResponseStructure<JWTResponse>> userLogin(@RequestBody SignInRequest request) {
 		return userService.userLogin(request);
