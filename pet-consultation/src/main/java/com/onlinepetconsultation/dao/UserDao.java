@@ -38,6 +38,14 @@ public class UserDao {
 		return null;
 	}
 
+	public Users getUserByEmail(String userName) {
+		Optional<Users> user = userRepository.findByUserEmail(userName);
+		if (user.isPresent()) {
+			return user.get();
+		}
+		return null;
+	}
+	
 	public boolean deleteUsers(int userId) {
 		Users user = this.getUserById(userId);
 		if (user != null) {

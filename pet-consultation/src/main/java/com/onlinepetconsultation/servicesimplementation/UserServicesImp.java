@@ -34,7 +34,6 @@ public class UserServicesImp implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
-	@Qualifier("userManger")
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	@Qualifier("userdetailservices")
@@ -145,10 +144,10 @@ public class UserServicesImp implements UserService {
 		}
 
 		ResponseStructure<Users> responseStructure = new ResponseStructure<Users>();
-		responseStructure.setStatusCode(HttpStatus.CREATED.value());
+		responseStructure.setStatusCode(HttpStatus.OK.value());
 		responseStructure.setMessage("User updated succesfully");
 		responseStructure.setData(receivedUser);
-		return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.CREATED);
+		return new ResponseEntity<ResponseStructure<Users>>(responseStructure, HttpStatus.OK);
 
 	}
 
@@ -187,15 +186,12 @@ public class UserServicesImp implements UserService {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email,
 				password);
 		System.err.println(authenticationToken);
-		if (authenticationToken.isAuthenticated()) {
+		
 			try {
 				Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 				System.err.println(authenticate);
 			} catch (BadCredentialsException e) {
 				throw new BadCredentialsException("Invalid Username or Password ..!!");
 			}
-		} else {
-			throw new BadCredentialsException("Invalid Username or Password ..!!");
-		}
 	}
 }

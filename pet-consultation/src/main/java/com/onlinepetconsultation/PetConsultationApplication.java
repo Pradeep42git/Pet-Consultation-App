@@ -9,7 +9,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.onlinepetconsultation.entity.Admin;
 import com.onlinepetconsultation.repository.AdminRepository;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+
 @SpringBootApplication
+@OpenAPIDefinition(info=@Info(title = "Online-Pet-Consultation Application OPEN-API",version = "1.0.0",description = "Online-Pet-Consultation Application API with Spring boot"),
+servers = {
+		@Server (url = "http://localhost:8080",description = " Development Online-Pet-Consultation Application OPEN API url"),
+		@Server (url = "http://localhost:8081",description = "Testing Online-Pet-Consultation Application OPEN API url")
+}
+) 
 public class PetConsultationApplication implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -20,7 +30,7 @@ public class PetConsultationApplication implements CommandLineRunner {
 		SpringApplication.run(PetConsultationApplication.class, args);
 	}
 
-	@Override
+	@Override 
 	public void run(String... args) throws Exception {
 		if (adminRepository.count() == 0) {
 			Admin admin = new Admin();

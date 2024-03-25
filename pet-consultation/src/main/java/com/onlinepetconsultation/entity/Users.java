@@ -1,5 +1,6 @@
 package com.onlinepetconsultation.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.onlinepetconsultation.util.Roles;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -61,18 +63,18 @@ public class Users implements UserDetails {
 //	@Pattern(regexp = "^[A-Za-z0-9@#$%&*]*$" ,message = "Invalid password format" )
 	private String password;
 	
-	@Min(value = 6000000000l)
-	@Max(value = 9999999999l)
+	@Min(value = 6000000000l, message = "Phone number should range from 6000000000 to 9999999999")
+	@Max(value = 9999999999l, message = "Phone number should range from 6000000000 to 9999999999")
 	private long userPhone;
 	
 	private String userAddress;
 	
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JsonIgnore
-	List<Booking> booking;
+	List<Booking> booking= new ArrayList<Booking>();
 	
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JsonIgnore/*
 	 * Performs delete operations on admin based on id
 	 */

@@ -2,8 +2,6 @@ package com.onlinepetconsultation.dto;
 
 import java.util.List;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FoodOrderDto {
 	
-	private boolean orderStatus;
-	@Positive
-	@NotNull
 	private List<Integer> products;
 
 }
